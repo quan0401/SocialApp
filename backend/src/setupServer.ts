@@ -1,4 +1,3 @@
-import { IErrorResponse } from './shared/globals/helpers/error-handler';
 import { Application, json, urlencoded, Response, Request, NextFunction } from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -11,9 +10,9 @@ import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import compression from 'compression';
 import 'express-async-errors';
-import { config } from './config';
-import { CustomError } from './shared/globals/helpers/error-handler';
-import applicationRoutes from './routes';
+import { config } from '~/config';
+import { CustomError, IErrorResponse } from '~global/helpers/error-handler';
+import applicationRoutes from '~/routes';
 
 import Logger from 'bunyan';
 
