@@ -32,6 +32,9 @@
       }
     ],
     "paths": {
+      "~user/*": [
+        "src/features/user/*"
+      ],
       "~auth/*": [
         "src/features/auth/*"
       ],

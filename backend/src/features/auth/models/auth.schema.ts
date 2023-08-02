@@ -10,7 +10,7 @@ const authSchema: Schema = new Schema(
     uId: String,
     email: String,
     password: String,
-    avatar: String,
+    avatarColor: String,
     createdAt: { type: Date, default: Date.now },
     passwordResetToken: { type: String, default: '' },
     passwordResetExpires: { type: Number }
@@ -24,13 +24,16 @@ const authSchema: Schema = new Schema(
     }
   }
 );
+
 authSchema.pre('save', async function (this: IAuthDocument, next: () => void) {
   const hash: string = await bcrypt.hash(this.password as string, SALT_ROUND);
   this.password = hash;
   next();
 });
+
 authSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
-  const hasedPassword: string = (this.password as unknown as IAuthDocument).password!;
+  const hasedPassword: string = this.password;
+
   return await bcrypt.compare(password, hasedPassword);
 };
 
@@ -40,6 +43,3 @@ authSchema.methods.hashPasswod = async function (password: string): Promise<stri
 
 const AuthModel: Model<IAuthDocument> = model<IAuthDocument>('Auth', authSchema, 'Auth');
 export { AuthModel };
-
-// const AuthModel: Model<IAuthDocument> = model<IAuthDocument>('Auth', authSchema, 'Auth');
-// export { AuthModel };

@@ -3,7 +3,7 @@ import bunyan from 'bunyan';
 import cloudinary from 'cloudinary';
 
 class Config {
-  public MONGO_URI: string;
+  public MONGO_URI: string | undefined;
   public JWT_TOKEN: string;
   public NODE_ENV: string;
   public SECRET_KEY_ONE: string;
@@ -13,6 +13,7 @@ class Config {
   public CLOUD_NAME: string;
   public API_KEY: string;
   public API_SECRET: string;
+  public FOLDER: string | undefined;
 
   constructor() {
     this.MONGO_URI = process.env.MONGO_URI || '';
@@ -25,6 +26,7 @@ class Config {
     this.CLOUD_NAME = process.env.CLOUD_NAME || '';
     this.API_KEY = process.env.API_KEY || '';
     this.API_SECRET = process.env.API_SECRET || '';
+    this.FOLDER = process.env.FOLDER || '';
   }
 
   public validateConfig(): void {

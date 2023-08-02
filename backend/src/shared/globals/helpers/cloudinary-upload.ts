@@ -1,4 +1,5 @@
 import cloudinary, { UploadApiErrorResponse, UploadApiResponse } from 'cloudinary';
+import { config } from '~/config';
 
 export const uploads = (
   file: string,
@@ -12,7 +13,8 @@ export const uploads = (
       {
         public_id,
         overwrite,
-        invalidate
+        invalidate,
+        folder: config.FOLDER
       },
       (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
         if (error) resolve(error);
