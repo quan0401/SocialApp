@@ -10,6 +10,7 @@ import { config } from '~/config';
 import { userService } from '~services/db/user.service';
 import { IUserDocument } from '~user/interfaces/user.interface';
 import Logger from 'bunyan';
+import { UserCache } from '~services/redis/user.cache';
 const log: Logger = config.createLogger('Signin');
 
 export class Signin {
@@ -38,7 +39,9 @@ export class Signin {
         },
         config.JWT_TOKEN
       );
+
       req.session = { jwt: userJwt };
+
       const userDocument: IUserDocument = {
         ...user,
         authId: existingUser._id,
@@ -49,9 +52,7 @@ export class Signin {
         createdAt: existingUser.createdAt
       } as IUserDocument;
 
-      res
-        .status(HTTP_STATUS.OK)
-        .json({ message: 'User logins successfully', user: userDocument, token: userJwt, result: { username, password, passwordMatch } });
+      res.status(HTTP_STATUS.OK).json({ message: 'User logins successfully', user: userDocument, token: userJwt });
     } catch (error) {
       log.error(error);
     }

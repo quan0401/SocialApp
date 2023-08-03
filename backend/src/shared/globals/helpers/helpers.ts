@@ -18,4 +18,11 @@ export class Helpers {
     }
     return parseInt(result, 10);
   }
+  static parseJson(prop: any) {
+    try {
+      return JSON.parse(prop);
+    } catch (error) {
+      return prop;
+    }
+  }
 }

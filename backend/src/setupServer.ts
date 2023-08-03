@@ -38,7 +38,7 @@ export class ChattyServer {
       cookieSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE, config.SECRET_KEY_TWO],
-        maxAge: 24 * 7 * 3600000,
+        maxAge: 60000,
         secure: config.NODE_ENV !== 'development'
       })
     );
@@ -104,6 +104,7 @@ export class ChattyServer {
     io.adapter(createAdapter(pubClient, subClient));
     return io;
   }
+
   private startHttpServer(httpServer: http.Server): void {
     log.info(`Server start on process ${process.pid}`);
     httpServer.listen(SERVER_PORT, () => {

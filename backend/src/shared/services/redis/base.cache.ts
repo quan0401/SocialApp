@@ -5,8 +5,8 @@ import { config } from '~/config';
 export type RedisClient = ReturnType<typeof createClient>;
 
 export abstract class BaseCache {
-  client: RedisClient;
-  log: Logger;
+  protected client: RedisClient;
+  protected log: Logger;
   constructor(cacheName: string) {
     this.client = createClient({ url: config.REDIS_HOST });
     this.log = config.createLogger(cacheName);

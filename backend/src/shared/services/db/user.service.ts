@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 
 import { IUserDocument } from '~user/interfaces/user.interface';
 import { UserModel } from '~user/models/user.schema';
@@ -9,13 +10,24 @@ class UserService {
   }
   public async getUserByAuthId(authId: string | ObjectId): Promise<IUserDocument> {
     const users: IUserDocument[] = await UserModel.aggregate([
-      { $match: { authId: authId } },
+      { $match: { authId: new mongoose.Types.ObjectId(authId) } },
       { $lookup: { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' } },
       { $unwind: '$authId' },
       { $project: this.aggregate() }
     ]);
     return users[0];
   }
+
+  public async getUserById(userId: string): Promise<IUserDocument> {
+    const users: IUserDocument[] = await UserModel.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(userId) } },
+      { $lookup: { from: 'Auth', localField: 'authId', foreignField: '_id', as: 'authId' } },
+      { $unwind: '$authId' },
+      { $project: this.aggregate() }
+    ]);
+    return users[0];
+  }
+
   private aggregate() {
     return {
       _id: 1,
