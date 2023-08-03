@@ -1,7 +1,7 @@
 import express, { Express } from 'express';
-import { ChattyServer } from './setupServer';
-import databaseConnection from './setupDatabase';
-import { config } from './config';
+import { ChattyServer } from '~/setupServer';
+import databaseConnection from '~/setupDatabase';
+import { config } from '~/config';
 
 class Application {
   public async initialize(): Promise<void> {
@@ -13,6 +13,7 @@ class Application {
   }
   private loadConfig(): void {
     config.validateConfig();
+    config.cloudinaryConfig();
   }
 }
 

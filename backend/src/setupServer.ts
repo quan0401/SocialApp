@@ -1,4 +1,3 @@
-import { IErrorResponse } from './shared/globals/helpers/error-handler';
 import { Application, json, urlencoded, Response, Request, NextFunction } from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -11,9 +10,9 @@ import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import compression from 'compression';
 import 'express-async-errors';
-import { config } from './config';
-import { CustomError } from './shared/globals/helpers/error-handler';
-import applicationRoutes from './routes';
+import { config } from '~/config';
+import { CustomError, IErrorResponse } from '~global/helpers/error-handler';
+import applicationRoutes from '~/routes';
 
 import Logger from 'bunyan';
 
@@ -39,7 +38,7 @@ export class ChattyServer {
       cookieSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE, config.SECRET_KEY_TWO],
-        maxAge: 24 * 7 * 3600000,
+        maxAge: 60000,
         secure: config.NODE_ENV !== 'development'
       })
     );
@@ -72,6 +71,7 @@ export class ChattyServer {
 
     app.use((error: IErrorResponse, req: Request, res: Response, next: NextFunction) => {
       log.error(error);
+
       if (error instanceof CustomError) {
         return res.status(error.statusCode).json(error.serializeErrors());
       }
@@ -104,6 +104,7 @@ export class ChattyServer {
     io.adapter(createAdapter(pubClient, subClient));
     return io;
   }
+
   private startHttpServer(httpServer: http.Server): void {
     log.info(`Server start on process ${process.pid}`);
     httpServer.listen(SERVER_PORT, () => {

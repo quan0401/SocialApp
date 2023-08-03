@@ -1,14 +1,19 @@
 require('dotenv').config();
 import bunyan from 'bunyan';
+import cloudinary from 'cloudinary';
 
 class Config {
-  public MONGO_URI: string;
+  public MONGO_URI: string | undefined;
   public JWT_TOKEN: string;
   public NODE_ENV: string;
   public SECRET_KEY_ONE: string;
   public SECRET_KEY_TWO: string;
   public CLIENT_URI: string | undefined;
   public REDIS_HOST: string | undefined;
+  public CLOUD_NAME: string;
+  public API_KEY: string;
+  public API_SECRET: string;
+  public FOLDER: string | undefined;
 
   constructor() {
     this.MONGO_URI = process.env.MONGO_URI || '';
@@ -18,6 +23,10 @@ class Config {
     this.SECRET_KEY_TWO = process.env.SECRET_KEY_TWO || '';
     this.CLIENT_URI = process.env.CLIENT_URI || '';
     this.REDIS_HOST = process.env.REDIS_HOST || '';
+    this.CLOUD_NAME = process.env.CLOUD_NAME || '';
+    this.API_KEY = process.env.API_KEY || '';
+    this.API_SECRET = process.env.API_SECRET || '';
+    this.FOLDER = process.env.FOLDER || '';
   }
 
   public validateConfig(): void {
@@ -29,6 +38,13 @@ class Config {
     return bunyan.createLogger({
       name,
       level: 'debug'
+    });
+  }
+  public cloudinaryConfig(): void {
+    cloudinary.v2.config({
+      cloud_name: this.CLOUD_NAME,
+      api_key: this.API_KEY,
+      api_secret: this.API_SECRET
     });
   }
 }
