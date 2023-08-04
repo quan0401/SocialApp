@@ -16,6 +16,7 @@ export function joiValidation(schema: ObjectSchema): IJoiDecorator {
       }
       return originalMethod.apply(this, args);
     };
+
     return descriptor;
   };
 }

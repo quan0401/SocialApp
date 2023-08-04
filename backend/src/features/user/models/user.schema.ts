@@ -7,8 +7,6 @@ const userSchema: Schema = new Schema({
   postsCount: { type: Number, default: 0 },
   followersCount: { type: Number, default: 0 },
   followingCount: { type: Number, default: 0 },
-  passwordResetToken: { type: String, default: '' },
-  passwordResetExpires: { type: Number },
   blocked: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   blockedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   notifications: {

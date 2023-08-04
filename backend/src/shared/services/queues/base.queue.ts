@@ -5,15 +5,16 @@ import { BullAdapter } from '@bull-board/api/bullAdapter';
 import { ExpressAdapter } from '@bull-board/express';
 import { config } from '~/config';
 import { IAuthJob } from '~auth/interfaces/auth.interface';
+import { IEmailJob } from '~user/interfaces/user.interface';
 
 let bullAdapter: BullAdapter[] = [];
 
-type IBaseJobData = IAuthJob;
+type IBaseJobData = IAuthJob | IEmailJob;
 export let serverAdapter: ExpressAdapter;
 
 export abstract class BaseQueue {
-  queue: Queue.Queue;
-  log: Logger;
+  private queue: Queue.Queue;
+  private log: Logger;
 
   constructor(queueName: string) {
     this.queue = new Queue(queueName, `${config.REDIS_HOST}`);
@@ -26,6 +27,7 @@ export abstract class BaseQueue {
       queues: bullAdapter,
       serverAdapter
     });
+
     this.log = config.createLogger(queueName);
 
     this.queue.on('completed', (job: Job) => {

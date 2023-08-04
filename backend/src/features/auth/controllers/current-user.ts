@@ -12,6 +12,7 @@ export class CurrentUser {
     const userCache: UserCache = new UserCache();
     const userFromCache: IUserDocument = (await userCache.getUserFromCache(req.currentUser!.userId)) as IUserDocument;
     const existingUser = userFromCache ? userFromCache : ((await userService.getUserById(req.currentUser!.userId)) as IUserDocument);
+
     if (Object.keys(existingUser).length) {
       isUser = true;
       token = req.session?.jwt;
