@@ -8,7 +8,7 @@
     ],
     "baseUrl": ".",
     "outDir": "./build",
-    "rootDir": "src",
+    "rootDir": ".",
     "strict": true,
     "noImplicitAny": true,
     "noUnusedLocals": false,
@@ -47,8 +47,11 @@
       "~sockets/*": [
         "src/shared/sockets/*"
       ],
-      "~wokers/*": [
+      "~workers/*": [
         "src/shared/workers/*"
+      ],
+      "~mocks/*": [
+        "src/mocks/*"
       ],
       "~/*": [
         "src/*"

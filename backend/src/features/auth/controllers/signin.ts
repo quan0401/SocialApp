@@ -1,7 +1,7 @@
 import HTTP_STATUS from 'http-status-codes';
 import { Response, Request } from 'express';
 import { IAuthDocument } from '~auth/interfaces/auth.interface';
-import { signinSchema } from '~auth/schemes/signin';
+import { signinSchema } from '~auth/schemes/signin.scheme';
 import { joiValidation } from '~global/decorators/joi-validation.decorators';
 import { BadRequesetError } from '~global/helpers/error-handler';
 import { authService } from '~services/db/auth.service';

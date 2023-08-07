@@ -1,4 +1,4 @@
-import { userWorker } from '~wokers/user.worker';
+import { userWorker } from '~workers/user.worker';
 import { BaseQueue } from './base.queue';
 import { IAuthJob } from '~auth/interfaces/auth.interface';
 

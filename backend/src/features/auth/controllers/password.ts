@@ -1,6 +1,6 @@
 import HTTP_STATUS from 'http-status-codes';
 import { joiValidation } from '~global/decorators/joi-validation.decorators';
-import { emailSchema, passwordSchema } from '~auth/schemes/password';
+import { emailSchema, passwordSchema } from '~auth/schemes/password.scheme';
 import { Request, Response } from 'express';
 import { IAuthDocument } from '~auth/interfaces/auth.interface';
 import { authService } from '~services/db/auth.service';
@@ -28,10 +28,9 @@ export class Password {
 
     const resetLink: string = `${config.CLIENT_URI}/reset-password?token=${randomCharacters}`;
     const template: string = forgotPasswordTemplate.passwordResetTemplate(existingUser.username, resetLink);
-    // to do: change to existingUser.email
     emailQueue.addEmailJob('forgotPasswordEmail', {
       template,
-      receiverEmail: 'esteban.schuppe46@ethereal.email',
+      receiverEmail: existingUser.email,
       subject: 'Reset your password'
     });
     res.status(HTTP_STATUS.OK).json({ message: 'Password reset email sent' });
@@ -51,6 +50,7 @@ export class Password {
     existingUser.password = password;
     existingUser.passwordResetExpires = undefined;
     existingUser.passwordResetToken = undefined;
+
     await existingUser.save();
     const templateParams: IResetPasswordParams = {
       username: existingUser.username,
@@ -59,9 +59,8 @@ export class Password {
       date: moment().format('DD/MM/YYYY HH:mm')
     };
     const template: string = resetPasswordTemplate.passwordResetConfirmationTemplate(templateParams);
-    // to do: change to existingUser.email
     emailQueue.addEmailJob('forgotPasswordEmail', {
-      receiverEmail: 'esteban.schuppe46@ethereal.email',
+      receiverEmail: existingUser.email,
       template,
       subject: 'Password reset confirmation'
     });

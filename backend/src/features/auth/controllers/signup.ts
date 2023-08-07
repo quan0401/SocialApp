@@ -1,7 +1,7 @@
 import HTTP_STATUS from 'http-status-codes';
 import { Request, Response } from 'express';
 import { IAuthDocument, ISignUpData } from '~auth/interfaces/auth.interface';
-import { signupSchema } from '~auth/schemes/signup';
+import { signupSchema } from '~auth/schemes/signup.scheme';
 import { joiValidation } from '~global/decorators/joi-validation.decorators';
 import { BadRequesetError } from '~global/helpers/error-handler';
 import { authService } from '~services/db/auth.service';
@@ -33,7 +33,7 @@ export class SignUp {
 
     // this not work because of decorator
     // const authData = this.signupdata({ _id: authObjectId, uId, username, email, password, avatarColor });
-    const authData = SignUp.prototype.signupdata({ _id: authObjectId, uId, username, email, password, avatarColor });
+    const authData: IAuthDocument = SignUp.prototype.signupdata({ _id: authObjectId, uId, username, email, password, avatarColor });
     const result: UploadApiResponse = (await uploads(avatarImage, userObjectId.toString(), true, true)) as UploadApiResponse;
     if (!result?.public_id) {
       throw new BadRequesetError('File upload: Error occured. Try again!');
