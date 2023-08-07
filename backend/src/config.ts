@@ -14,6 +14,11 @@ class Config {
   public API_KEY: string;
   public API_SECRET: string;
   public FOLDER: string | undefined;
+  // Email
+  public SENDER_EMAIL: string | undefined;
+  public SENDER_EMAIL_PASSWORD: string | undefined;
+  public SENDGRID_API_KEY: string | undefined;
+  public SENDGRID_SENDER: string | undefined;
 
   constructor() {
     this.MONGO_URI = process.env.MONGO_URI || '';
@@ -27,11 +32,17 @@ class Config {
     this.API_KEY = process.env.API_KEY || '';
     this.API_SECRET = process.env.API_SECRET || '';
     this.FOLDER = process.env.FOLDER || '';
+    // Email
+    this.SENDER_EMAIL = process.env.SENDER_EMAIL || '';
+    this.SENDER_EMAIL_PASSWORD = process.env.SENDER_EMAIL_PASSWORD || '';
+    this.SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
+    this.SENDGRID_SENDER = process.env.SENDGRID_SENDER || '';
   }
 
   public validateConfig(): void {
     for (const [key, value] of Object.entries(this)) {
-      if (value === '') throw new Error(`Configuration ${key} is ''`);
+      // to do: remove this later these key exception later
+      if (value === '' && key !== 'SENDGRID_API_KEY' && key !== 'SENDGRID_SENDER') throw new Error(`Configuration ${key} is ''`);
     }
   }
   public createLogger(name: string): bunyan {

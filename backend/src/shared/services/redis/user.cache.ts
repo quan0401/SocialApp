@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import { IUserDocument } from '~user/interfaces/user.interface';
 import { BaseCache } from './base.cache';
 import { config } from '~/config';
@@ -19,7 +18,6 @@ export class UserCache extends BaseCache {
       authId,
       username,
       email,
-      password,
       avatarColor,
       uId,
       postsCount,
