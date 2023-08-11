@@ -1,5 +1,3 @@
-import Logger from 'bunyan';
-import { config } from '~/config';
 import { IAuthDocument } from '~auth/interfaces/auth.interface';
 import { AuthModel } from '~auth/models/auth.schema';
 import { Helpers } from '~global/helpers/helpers';

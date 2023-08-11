@@ -100,6 +100,7 @@ export class UserCache extends BaseCache {
       throw new ServerError('Server error, please try again');
     }
   }
+
   public async getUserFromCache(userId: string): Promise<IUserDocument | null> {
     try {
       if (!this.client.isOpen) await this.client.connect();
