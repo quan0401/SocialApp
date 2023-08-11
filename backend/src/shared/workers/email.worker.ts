@@ -13,7 +13,7 @@ class EmailWorker {
       await mailTransport.sendMail(receiverEmail, subject, template);
 
       job.progress(100);
-      done(null);
+      done(null, job.data);
     } catch (error) {
       log.error(error);
       done(error as Error);

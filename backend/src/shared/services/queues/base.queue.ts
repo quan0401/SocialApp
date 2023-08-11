@@ -6,10 +6,11 @@ import { ExpressAdapter } from '@bull-board/express';
 import { config } from '~/config';
 import { IAuthJob } from '~auth/interfaces/auth.interface';
 import { IEmailJob } from '~user/interfaces/user.interface';
+import { IPostJobData } from '~post/interfaces/post.interface';
 
 let bullAdapter: BullAdapter[] = [];
 
-type IBaseJobData = IAuthJob | IEmailJob;
+type IBaseJobData = IAuthJob | IEmailJob | IPostJobData;
 export let serverAdapter: ExpressAdapter;
 
 export abstract class BaseQueue {

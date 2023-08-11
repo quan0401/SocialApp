@@ -38,6 +38,12 @@
       "~auth/*": [
         "src/features/auth/*"
       ],
+      "~reaction/*": [
+        "src/features/reaction/*"
+      ],
+      "~post/*": [
+        "src/features/post/*"
+      ],
       "~global/*": [
         "src/shared/globals/*"
       ],

@@ -15,6 +15,7 @@ import { CustomError, IErrorResponse } from '~global/helpers/error-handler';
 import applicationRoutes from '~/routes';
 
 import Logger from 'bunyan';
+import { SocketIOPostHandler } from '~sockets/post.socket';
 
 const SERVER_PORT = 5001;
 const log: Logger = config.createLogger('server');
@@ -38,7 +39,7 @@ export class ChattyServer {
       cookieSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE, config.SECRET_KEY_TWO],
-        maxAge: 60000,
+        maxAge: 3600 * 1000,
         secure: config.NODE_ENV !== 'development'
       })
     );
@@ -112,5 +113,8 @@ export class ChattyServer {
     });
   }
 
-  private socketIOConnections(io: Server): void {}
+  private socketIOConnections(io: Server): void {
+    const socketIOPostHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+    socketIOPostHandler.listen();
+  }
 }
