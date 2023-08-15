@@ -1,0 +1,28 @@
+addReactionToDB
+ 
+toString
+ 
+createdAt
+ 
+async
+ 
+imgVersion
+ 
+.catch((error: CustomError) => {
+      expect(error.serializeErrors().message).toBe('Upload fail');
+      expect(error.statusCode).toBe(HTTP_STATUS.BAD_REQUEST);
+      expect(cloudinaryUploads.uploads).toHaveBeenCalledWith(updatedPostWithImage.image);
+    });
+ 
+const spy = 
+ 
+image
+ 
+const spy = 
+ 
+results
+ 
+socketIOPostObject
+ 
+ 
+ 

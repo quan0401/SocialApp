@@ -38,7 +38,7 @@ export class CreatePost {
         haha: 0,
         wow: 0,
         sad: 0,
-        angrty: 0
+        angry: 0
       },
       createdAt: new Date()
     } as IPostDocument;
@@ -77,7 +77,7 @@ export class CreatePost {
         haha: 0,
         wow: 0,
         sad: 0,
-        angrty: 0
+        angry: 0
       },
       imgVersion: result.version.toString(),
       imgId: result.public_id.toString(),
