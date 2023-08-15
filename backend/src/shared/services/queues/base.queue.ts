@@ -7,10 +7,11 @@ import { config } from '~/config';
 import { IAuthJob } from '~auth/interfaces/auth.interface';
 import { IEmailJob } from '~user/interfaces/user.interface';
 import { IPostJobData } from '~post/interfaces/post.interface';
+import { IReactionJob } from '~reaction/interfaces/reaction.interface';
 
 let bullAdapter: BullAdapter[] = [];
 
-type IBaseJobData = IAuthJob | IEmailJob | IPostJobData;
+type IBaseJobData = IAuthJob | IEmailJob | IPostJobData | IReactionJob;
 export let serverAdapter: ExpressAdapter;
 
 export abstract class BaseQueue {

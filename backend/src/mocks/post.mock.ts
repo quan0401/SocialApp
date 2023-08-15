@@ -43,7 +43,7 @@ export const newPost: IBody = {
   image: '',
   privacy: 'Public',
   profilePicture: 'http://place-hold.it/500x500',
-  feelings: 'happy'
+  feelings: 'haha'
 };
 
 export const postMockData: IPostDocument = {
@@ -57,15 +57,15 @@ export const postMockData: IPostDocument = {
   bgColor: '#f44336',
   imgId: '',
   imgVersion: '',
-  feelings: 'happy',
+  feelings: 'haha',
   gifUrl: '',
   privacy: 'Public',
   commentsCount: 0,
   createdAt: new Date(),
   reactions: {
-    like: 0,
+    like: 1,
     love: 0,
-    happy: 0,
+    haha: 0,
     wow: 0,
     sad: 0,
     angry: 0
