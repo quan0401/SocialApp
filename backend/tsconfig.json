@@ -44,6 +44,9 @@
       "~post/*": [
         "src/features/post/*"
       ],
+      "~comment/*": [
+        "src/features/comment/*"
+      ],
       "~global/*": [
         "src/shared/globals/*"
       ],
