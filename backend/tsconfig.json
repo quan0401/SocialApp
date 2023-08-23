@@ -41,6 +41,9 @@
       "~reaction/*": [
         "src/features/reaction/*"
       ],
+      "~follower/*": [
+        "src/features/follower/*"
+      ],
       "~post/*": [
         "src/features/post/*"
       ],

@@ -2,6 +2,7 @@ import { Application } from 'express';
 import { authRoutes } from '~auth/routes/auth.routes';
 import { currentRoutes } from '~auth/routes/current.routes';
 import { commentRoute } from '~comment/routes/comment.routes';
+import { followerRoutes } from '~follower/routes/follower.routes';
 import { AuthMiddleware } from '~global/helpers/auth-middleware';
 import { postRoutes } from '~post/routes/post.routes';
 import { reactionRoute } from '~reaction/routes/reaction.route';
@@ -22,6 +23,7 @@ export default (app: Application) => {
     app.use(`${BASE_URL}/post`, postRoutes.routes());
     app.use(`${BASE_URL}/reaction`, reactionRoute.routes());
     app.use(`${BASE_URL}/comment`, commentRoute.routes());
+    app.use(`${BASE_URL}/follower`, followerRoutes.routes());
   };
   routes();
 };

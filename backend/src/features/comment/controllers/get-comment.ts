@@ -10,7 +10,7 @@ import { getCommentSchema } from '~comment/schemes/comment.scheme';
 const commentCache: CommentCache = new CommentCache();
 
 export class GetComment {
-  @joiValidation(getCommentSchema)
+  @joiValidation(getCommentSchema, true)
   public async getCommentsOfPost(req: Request, res: Response): Promise<void> {
     const { postId } = req.params;
     const commentsFromCache: ICommentDocument[] = await commentCache.getCommentsOfPost(postId);
@@ -21,7 +21,7 @@ export class GetComment {
     res.status(HTTP_STATUS.OK).json({ message: 'Get comments from post', comments, count: comments.length });
   }
 
-  @joiValidation(getCommentSchema)
+  @joiValidation(getCommentSchema, true)
   public async getCommetNamesOfPost(req: Request, res: Response): Promise<void> {
     const { postId } = req.params;
 
@@ -34,7 +34,7 @@ export class GetComment {
     res.status(HTTP_STATUS.OK).json({ message: "Get comments' name", names: reply.names, count: reply.count });
   }
 
-  @joiValidation(getCommentSchema)
+  @joiValidation(getCommentSchema, true)
   public async getCommentById(req: Request, res: Response): Promise<void> {
     const { postId, commentId } = req.params;
 
