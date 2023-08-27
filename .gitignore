@@ -49,8 +49,6 @@ web_modules/
 # TypeScript cache
 *.tsbuildinfo
 
-
-
 # Optional npm cache directory
 .npm
 
@@ -96,7 +94,7 @@ dist
 
 # Gatsby files
 .cache/
-# Comment in the public line in if your project uses Gatsby and not Next.js
+# Comment in the public line if your project uses Gatsby and not Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 
@@ -131,3 +129,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Ignore dump.rdb and .DS_Store
+dump.rdb
+.DS_Store
+
+# Ignore contents inside root level directories
+/*/dump.rdb
+/*/.DS_Store
