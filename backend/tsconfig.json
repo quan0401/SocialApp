@@ -41,6 +41,9 @@
       "~reaction/*": [
         "src/features/reaction/*"
       ],
+      "~nofitication/*": [
+        "src/features/nofitication/*"
+      ],
       "~follower/*": [
         "src/features/follower/*"
       ],

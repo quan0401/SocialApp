@@ -10,10 +10,19 @@ import { IPostJobData } from '~post/interfaces/post.interface';
 import { IReactionJob } from '~reaction/interfaces/reaction.interface';
 import { ICommentJob } from '~comment/interfaces/comment.interface';
 import { IBlockedUserJobData, IFollowerJobData } from '~follower/interfaces/follower.interface';
+import { INotificationJobData } from '~nofitication/interfaces/notification.interface';
 
 let bullAdapter: BullAdapter[] = [];
 
-type IBaseJobData = IAuthJob | IEmailJob | IPostJobData | IReactionJob | ICommentJob | IFollowerJobData | IBlockedUserJobData;
+type IBaseJobData =
+  | IAuthJob
+  | IEmailJob
+  | IPostJobData
+  | IReactionJob
+  | ICommentJob
+  | IFollowerJobData
+  | IBlockedUserJobData
+  | INotificationJobData;
 export let serverAdapter: ExpressAdapter;
 
 export abstract class BaseQueue {

@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:5001
+@urlPath = api/v1
+
+###
+GET  {{baseUrl}}/{{urlPath}}/nofitication
+Content-Type: application/json
+withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/nofitication/64eacba63f5c81b83b94ce36
+Content-Type: application/json
+withCredentials: true
+
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/nofitication/64eacba63f5c81b83b94ce36
+Content-Type: application/json
+withCredentials: true

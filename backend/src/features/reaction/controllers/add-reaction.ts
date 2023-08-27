@@ -14,6 +14,8 @@ export class AddReaction {
   public async add(req: Request, res: Response): Promise<void> {
     const { userTo, type, postId, profilePicture, postReactions, previousReaction } = req.body;
 
+    if (type === previousReaction) res.status(HTTP_STATUS.OK).json({ message: 'Reaction added successfully' });
+
     const reactionObject: IReactionDocument = {
       _id: new ObjectId(),
       username: req.currentUser!.username,
@@ -33,7 +35,8 @@ export class AddReaction {
       previousReaction,
       userFrom: req.currentUser!.userId,
       type,
-      reactionObject
+      reactionObject,
+      userTo
     };
 
     reactionQueue.addReactionJob('addReactionToDB', reactionData);
