@@ -16,7 +16,6 @@ const log: Logger = config.createLogger('MailTransport');
 
 class MailTransport {
   public async sendMail(receiverEmail: string, subject: string, body: string): Promise<void> {
-    // to do change to ===
     if (config.NODE_ENV === 'development' || config.NODE_ENV === 'test') {
       await this.developmentEmailSender(receiverEmail, subject, body);
     } else {

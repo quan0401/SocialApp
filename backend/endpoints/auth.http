@@ -10,3 +10,14 @@ withCredentials: true
   "username": "quan0401",
   "password": "quan0401"
 }
+
+###
+POST {{baseUrl}}/{{urlPath}}/signin
+Content-Type: application/json
+withCredentials: true
+
+{
+  "username": "tram",
+  "password": "quan0401"
+}
+

@@ -25,6 +25,7 @@ const config: Config = {
   moduleNameMapper: {
     '~auth/(.*)': ['<rootDir>/src/features/auth/$1'],
     '~reaction/(.*)': ['<rootDir>/src/features/reaction/$1'],
+    '~nofitication/(.*)': ['<rootDir>/src/features/nofitication/$1'],
     '~follower/(.*)': ['<rootDir>/src/features/follower/$1'],
     '~comment/(.*)': ['<rootDir>/src/features/comment/$1'],
     '~post/(.*)': ['<rootDir>/src/features/post/$1'],
