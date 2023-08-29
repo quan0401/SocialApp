@@ -28,6 +28,10 @@ class UserService {
     return users[0];
   }
 
+  public async updateSingleFieldInDB(userId: string, field: string, value: string): Promise<void> {
+    await UserModel.findOneAndUpdate({ _id: userId }, { $set: { [field]: value } });
+  }
+
   private aggregate() {
     return {
       _id: 1,

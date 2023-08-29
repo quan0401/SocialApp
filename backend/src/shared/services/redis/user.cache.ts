@@ -1,11 +1,13 @@
-import { IUserDocument } from '~user/interfaces/user.interface';
+import { INotificationSettings, ISocialLinks, IUserDocument } from '~user/interfaces/user.interface';
 import { BaseCache } from './base.cache';
 import { config } from '~/config';
 import Logger from 'bunyan';
 import { ServerError } from '~global/helpers/error-handler';
 import { Helpers } from '~global/helpers/helpers';
+import { isEmpty } from 'lodash';
 
 const log: Logger = config.createLogger('userCache');
+type IUserItem = string | ISocialLinks | INotificationSettings;
 
 export class UserCache extends BaseCache {
   constructor() {
@@ -122,6 +124,18 @@ export class UserCache extends BaseCache {
       response.profilePicture = Helpers.parseJson(`${response.profilePicture}`);
 
       return response;
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Server error, please try again');
+    }
+  }
+
+  public async updateSingleFieldInCache(userId: string, field: string, value: IUserItem): Promise<IUserDocument | null> {
+    try {
+      if (!this.client.isOpen) await this.client.connect();
+      await this.client.HSET(`users:${userId}`, field, JSON.stringify(value));
+      const user: IUserDocument = Helpers.parseJson(await this.client.HGETALL(`users:${userId}`));
+      return isEmpty(user) ? null : user;
     } catch (error) {
       log.error(error);
       throw new ServerError('Server error, please try again');
