@@ -4,6 +4,7 @@ import { currentRoutes } from '~auth/routes/current.routes';
 import { commentRoute } from '~comment/routes/comment.routes';
 import { followerRoutes } from '~follower/routes/follower.routes';
 import { AuthMiddleware } from '~global/helpers/auth-middleware';
+import { imageRoutes } from '~image/routes/image.routes';
 import { nofiticationRoutes } from '~nofitication/routes/nofitication.routes';
 import { postRoutes } from '~post/routes/post.routes';
 import { reactionRoute } from '~reaction/routes/reaction.route';
@@ -26,6 +27,7 @@ export default (app: Application) => {
     app.use(`${BASE_URL}/comment`, commentRoute.routes());
     app.use(`${BASE_URL}/follower`, followerRoutes.routes());
     app.use(`${BASE_URL}/nofitication`, nofiticationRoutes.routes());
+    app.use(`${BASE_URL}/image`, imageRoutes.routes());
   };
   routes();
 };

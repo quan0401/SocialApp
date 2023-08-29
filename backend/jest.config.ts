@@ -27,6 +27,7 @@ const config: Config = {
     '~reaction/(.*)': ['<rootDir>/src/features/reaction/$1'],
     '~nofitication/(.*)': ['<rootDir>/src/features/nofitication/$1'],
     '~follower/(.*)': ['<rootDir>/src/features/follower/$1'],
+    '~image/(.*)': ['<rootDir>/src/features/image/$1'],
     '~comment/(.*)': ['<rootDir>/src/features/comment/$1'],
     '~post/(.*)': ['<rootDir>/src/features/post/$1'],
     '~user/(.*)': ['<rootDir>/src/features/user/$1'],

@@ -12,6 +12,7 @@ import { CreatePost } from '~post/controllers/create-post';
 import * as postServer from '~sockets/post.socket';
 import { PostCache } from '~services/redis/post.cache';
 import { postQueue } from '~services/queues/post.queue';
+
 jest.useFakeTimers();
 jest.mock('~services/redis/post.cache');
 jest.mock('~services/queues/post.queue');
