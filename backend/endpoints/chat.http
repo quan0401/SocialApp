@@ -1,0 +1,78 @@
+@baseUrl = http://localhost:5001
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/chat/message
+Content-Type: application/json
+withCredentials: true
+
+{
+  "conversationId": "64f2d0fed56e4e47b654e822",
+  "receiverId": "64d1d8eeffde0ce3a2bbd12d",
+  "receiverUsername": "tram",
+  "receiverAvatarColor": "blue",
+  "receiverProfilePicture": "https://res.cloudinary.com/dg3fsapzu/image/upload/v1693219478/social/64d7176700dd5991fa36e90e.jpg",
+  "body": "hi from tram 2",
+  "gifUrl": "",
+  "isRead": false,
+  "selectedImage": ""
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/chat/add-users
+Content-Type: application/json
+withCredentials: true
+
+{
+  "userOne": "64d1d8eeffde0ce3a2bbd12d",
+  "userTwo": "64d7176700dd5991fa36e90e"
+}
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/chat/remove-users
+Content-Type: application/json
+withCredentials: true
+
+{
+  "userOne": "64d1d8eeffde0ce3a2bbd12d",
+  "userTwo": "64d7176700dd5991fa36e90e"
+}
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/chat/mark-as-deleted/64f2e1432d6472c963815958/64d7176700dd5991fa36e90e/64f2d0fed56e4e47b654e822/deleteForMe
+Content-Type: application/json
+withCredentials: true
+
+{}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/chat/read/64d7176700dd5991fa36e90e/64f2d0fed56e4e47b654e822
+Content-Type: application/json
+withCredentials: true
+
+{}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/chat/reaction
+Content-Type: application/json
+withCredentials: true
+
+{
+  "messageId": "64f2e1432d6472c963815958",
+  "senderName": "Tram",
+  "reaction": "sad",
+  "type": "add",
+  "conversationId": "64f2d0fed56e4e47b654e822"
+}
+
+
+###
+GET {{baseUrl}}/{{urlPath}}/chat
+Content-Type: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/chat/64f2d0fed56e4e47b654e822
+Content-Type: application/json
+withCredentials: true
+

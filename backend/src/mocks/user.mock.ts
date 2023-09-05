@@ -33,3 +33,37 @@ export const userMock: IUserDocument = {
   createdAt: new Date('2023-08-02T11:12:29.743Z'),
   authId: '64ca3a1d4e12ac4b6c7f766b'
 } as unknown as IUserDocument;
+
+export const userMock2: IUserDocument = {
+  _id: '64ca3a1d4e12ac4b6c7f766d',
+  profilePicture: 'https://res.cloudinary.com/vdg3fsapzu/image/upload/1690974751/social/64ca3a1d4e12ac4b6c7f766c.jpg',
+  postsCount: 10,
+  followersCount: 100,
+  followingCount: 50,
+  blocked: [],
+  blockedBy: [],
+  notifications: {
+    messages: true,
+    reactions: false,
+    comments: true,
+    follows: true
+  },
+  social: {
+    facebook: 'https://www.facebook.com/user2',
+    instagram: 'https://www.instagram.com/user2',
+    twitter: 'https://twitter.com/user2',
+    youtube: ''
+  },
+  work: 'Software Engineer',
+  school: 'University of XYZ',
+  location: 'New York, USA',
+  quote: 'Carpe Diem',
+  bgImageVersion: '2.0',
+  bgImageId: '64ca3a1d4e12ac4b6c7f766e',
+  username: 'User2',
+  uId: '5432109876',
+  email: 'user2@example.com',
+  avatarColor: 'blue',
+  createdAt: new Date('2023-08-05T14:20:00.000Z'),
+  authId: '64ca3a1d4e12ac4b6c7f766d'
+} as unknown as IUserDocument;

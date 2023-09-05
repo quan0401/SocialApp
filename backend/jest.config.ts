@@ -26,6 +26,7 @@ const config: Config = {
     '~auth/(.*)': ['<rootDir>/src/features/auth/$1'],
     '~reaction/(.*)': ['<rootDir>/src/features/reaction/$1'],
     '~nofitication/(.*)': ['<rootDir>/src/features/nofitication/$1'],
+    '~chat/(.*)': ['<rootDir>/src/features/chat/$1'],
     '~follower/(.*)': ['<rootDir>/src/features/follower/$1'],
     '~image/(.*)': ['<rootDir>/src/features/image/$1'],
     '~comment/(.*)': ['<rootDir>/src/features/comment/$1'],
