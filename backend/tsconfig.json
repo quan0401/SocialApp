@@ -50,6 +50,9 @@
       "~image/*": [
         "src/features/image/*"
       ],
+      "~chat/*": [
+        "src/features/chat/*"
+      ],
       "~post/*": [
         "src/features/post/*"
       ],

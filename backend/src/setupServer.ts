@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import cookieSession from 'cookie-session';
 import HTTP_STATUS from 'http-status-codes';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import compression from 'compression';
@@ -20,6 +20,7 @@ import { SocketIOFollowerHandler } from '~sockets/follower.socket';
 import { SocketIOUserHandler } from '~sockets/user.socket';
 import { SocketNofitication } from '~sockets/nofitication.socket';
 import { SocketImage } from '~sockets/image.socket';
+import { SocketChat } from '~sockets/chat.socket';
 
 const SERVER_PORT = 5001;
 const log: Logger = config.createLogger('server');
@@ -122,12 +123,14 @@ export class ChattyServer {
     const socketIOFollowerHandler: SocketIOFollowerHandler = new SocketIOFollowerHandler(io);
     const socketIOUser: SocketIOUserHandler = new SocketIOUserHandler(io);
     const socketIONofitcation: SocketNofitication = new SocketNofitication();
-    const socketIOImage: SocketNofitication = new SocketImage();
+    const socketIOImage: SocketImage = new SocketImage();
+    const socketIOChat: SocketChat = new SocketChat(io);
 
     socketIOPostHandler.listen();
     socketIOFollowerHandler.listen();
     socketIOUser.listen();
     socketIONofitcation.listen(io);
     socketIOImage.listen(io);
+    socketIOChat.listen();
   }
 }
