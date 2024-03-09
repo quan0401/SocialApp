@@ -1,0 +1,82 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "lib": [
+      "DOM",
+      "ES2015"
+    ],
+    "baseUrl": ".",
+    "outDir": "./build",
+    "rootDir": ".",
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      },
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ],
+    "paths": {
+      "~user/*": [
+        "src/features/user/*"
+      ],
+      "~auth/*": [
+        "src/features/auth/*"
+      ],
+      "~reaction/*": [
+        "src/features/reaction/*"
+      ],
+      "~nofitication/*": [
+        "src/features/nofitication/*"
+      ],
+      "~follower/*": [
+        "src/features/follower/*"
+      ],
+      "~image/*": [
+        "src/features/image/*"
+      ],
+      "~chat/*": [
+        "src/features/chat/*"
+      ],
+      "~post/*": [
+        "src/features/post/*"
+      ],
+      "~comment/*": [
+        "src/features/comment/*"
+      ],
+      "~global/*": [
+        "src/shared/globals/*"
+      ],
+      "~services/*": [
+        "src/shared/services/*"
+      ],
+      "~sockets/*": [
+        "src/shared/sockets/*"
+      ],
+      "~workers/*": [
+        "src/shared/workers/*"
+      ],
+      "~mocks/*": [
+        "src/mocks/*"
+      ],
+      "~/*": [
+        "src/*"
+      ]
+    }
+  }
+}
