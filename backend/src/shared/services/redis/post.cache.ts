@@ -38,7 +38,9 @@ export class PostCache extends BaseCache {
       reactions,
       createdAt,
       imgId,
-      imgVersion
+      imgVersion,
+      videoId,
+      videoVersion
     } = createdPost;
 
     const firstList: string[] = [
@@ -60,6 +62,10 @@ export class PostCache extends BaseCache {
       `${imgId}`,
       'imgVersion',
       `${imgVersion}`,
+      'videoId',
+      `${videoId}`,
+      'videoVersion',
+      `${videoVersion}`,
       'bgColor',
       `${bgColor}`
     ];
@@ -186,6 +192,8 @@ export class PostCache extends BaseCache {
     }
   }
 
+  // public async getPostsWithVideoFromCache(): Promise<IPostDocument[]> {}
+
   public async getUserPostsFromCache(key: 'post', uId: number): Promise<IPostDocument[]> {
     try {
       if (!this.client.isOpen) await this.client.connect();
@@ -253,17 +261,17 @@ export class PostCache extends BaseCache {
 
   public async updatePostInCache(key: string, data: IPostDocument): Promise<IPostDocument> {
     try {
-      const { profilePicture, post, bgColor, image, imgVersion, imgId, feelings, gifUrl, privacy } = data;
+      const { profilePicture, post, bgColor, image, imgVersion, imgId, videoVersion, videoId, feelings, gifUrl, privacy } = data;
 
-      if (!this.client.isOpen) {
-        await this.client.connect();
-      }
+      if (!this.client.isOpen) await this.client.connect();
 
       const dataToSave = {
         profilePicture: `${profilePicture}`,
         post: `${post}`,
         imgId: `${imgId}`,
         imgVersion: `${imgVersion}`,
+        videoId: `${imgId}`,
+        videoVersion: `${imgVersion}`,
         bgColor: `${bgColor}`,
         privacy: `${privacy}`,
         gifUrl: `${gifUrl}`,

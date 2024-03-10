@@ -8,11 +8,10 @@ import { IQueryComplete } from '~post/interfaces/post.interface';
 class PostService {
   public async addPost(userId: string, createdPost: IPostDocument): Promise<void> {
     const user: UpdateQuery<IUserDocument> = UserModel.findOneAndUpdate({ _id: userId }, { $inc: { postsCount: 1 } });
-
     const post: Promise<IPostDocument> = PostModel.create(createdPost);
-
     await Promise.all([user, post]);
   }
+
   public async getPosts(query: IGetPostsQuery, skip = 0, limit = 0, sort: Record<string, 1 | -1>): Promise<IPostDocument[]> {
     let postQuery = {};
     if (query?.imgId && query?.gifUrl) {
@@ -28,11 +27,13 @@ class PostService {
     const count: number = await PostModel.find().countDocuments();
     return count;
   }
+
   public async deletePost(postId: string, userId: string): Promise<void> {
     const deletedPost: Query<IQueryComplete & IQueryDeleted, IPostDocument> = PostModel.deleteOne({ _id: postId });
     const user: UpdateQuery<IUserDocument> = UserModel.findOneAndUpdate({ _id: userId }, { $inc: { postsCount: -1 } });
     await Promise.all([deletedPost, user]);
   }
+
   public async editPost(postId: string, updatedPost: IPostDocument): Promise<void> {
     const updatePost: UpdateQuery<IPostDocument> = PostModel.updateOne({ _id: postId }, { $set: updatedPost });
     await Promise.all([updatePost]);
