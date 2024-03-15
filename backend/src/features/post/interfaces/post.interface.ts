@@ -9,9 +9,12 @@ export interface IPostDocument extends Document {
   email: string;
   avatarColor: string;
   profilePicture: string;
+  // Posts info
   post: string;
   bgColor: string;
   commentsCount: number;
+  videoId?: string;
+  videoVersion?: string;
   image?: string;
   imgVersion?: string;
   imgId?: string;
@@ -27,6 +30,7 @@ export interface IGetPostsQuery {
   username?: string;
   imgId?: string;
   gifUrl?: string;
+  videoId?: string;
 }
 
 export interface ISavePostToCache {

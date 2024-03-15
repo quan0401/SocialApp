@@ -7,15 +7,17 @@ import { imageService } from '~services/db/image.service';
 import { IUserDocument } from '~user/interfaces/user.interface';
 import { UserCache } from '~services/redis/user.cache';
 import { userQueue } from '~services/queues/user.queue';
+import { BadRequesetError } from '~global/helpers/error-handler';
 
 const userCache: UserCache = new UserCache();
 
 export class DeleteImage {
   public async image(req: Request, res: Response): Promise<void> {
-    const { imageId } = req.params;
+    let { imageId } = req.body;
+    if (!imageId) throw new BadRequesetError('Must have imageId in body');
     socketImageObject.emit('delete image', imageId);
     imageQueue.addImageJob('removeImageFromDB', { imageId });
-    res.status(HTTP_STATUS.OK).json({ message: 'Deleted image successfully' });
+    res.status(HTTP_STATUS.OK).json({ message: 'Deleted image successfully', imageId });
   }
 
   public async backgroundImage(req: Request, res: Response): Promise<void> {

@@ -15,7 +15,7 @@ class ImageRoutes {
     this.router.post('/background', AddImage.prototype.backgroundImageUpload);
 
     this.router.delete('/background/:bgImageId', DeleteImage.prototype.backgroundImage);
-    this.router.delete('/:imageId', DeleteImage.prototype.image);
+    this.router.delete('/', DeleteImage.prototype.image);
 
     this.router.get('/:userId', GetImages.prototype.images);
     return this.router;

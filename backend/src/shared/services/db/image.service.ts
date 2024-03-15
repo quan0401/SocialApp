@@ -1,7 +1,8 @@
-import { DeleteApiResponse } from 'cloudinary';
+import { ResourceType } from 'cloudinary';
 import { DeleteResult } from 'mongodb';
 import mongoose from 'mongoose';
-import { deleteImageInCloudinary } from '~global/helpers/cloudinary-delete';
+import { IDeleteFromCloudinary, deleteImageInCloudinary } from '~global/helpers/cloudinary-delete';
+import { BadRequesetError } from '~global/helpers/error-handler';
 import { IFileImageDocument } from '~image/interfaces/image.interface';
 import { ImageModel } from '~image/model/image.schema';
 import { UserModel } from '~user/models/user.schema';
@@ -27,11 +28,19 @@ class ImageService {
     });
   }
 
-  public async removeImage(imgId: string): Promise<void> {
-    const image = await ImageModel.findOne({ _id: imgId });
-    const deleteImage: Promise<DeleteResult> = ImageModel.deleteOne({ _id: imgId });
-    const result: Promise<DeleteApiResponse> = deleteImageInCloudinary(image?.imgId as string);
+  public async removeImage(imageId: string): Promise<void> {
+    // Provide _id for imageId
+    const image = await ImageModel.findOne({ _id: imageId });
+    const deleteImage: Promise<DeleteResult> = ImageModel.deleteOne({ _id: imageId });
+    const result: Promise<IDeleteFromCloudinary> = deleteImageInCloudinary(image?.imgId as string);
     await Promise.all([deleteImage, result]);
+  }
+
+  public async removeFromCloudById(id: string, resource_type: ResourceType = 'image'): Promise<void> {
+    const fromCloud: IDeleteFromCloudinary = await deleteImageInCloudinary(id, resource_type);
+    if (fromCloud?.result !== 'ok') throw new BadRequesetError(fromCloud.result);
+    const fileType: 'imgId' | 'videoId' = resource_type === 'image' ? 'imgId' : 'videoId';
+    if (fileType === 'imgId') await ImageModel.deleteOne({ imgId: id });
   }
 
   public async getImgByBackgroundId(bgImageId: string): Promise<IFileImageDocument> {

@@ -21,15 +21,16 @@ export class AddImage {
     const { image } = req.body;
     const userId: string = req.currentUser!.userId;
     const result = await uploads(image, userId, true, true);
-    if (!result?.public_id) {
-      throw new BadRequesetError('File upload: Error occured. Try again.');
-    }
+
+    if (!result?.public_id) throw new BadRequesetError('File upload: Error occured. Try again.');
+
     const url = `https://res.cloudinary.com/${config.CLOUD_NAME}/image/upload/v${result.version}/${result.public_id.toString()}.jpg`;
     const cacheUser: IUserDocument = (await userCache.updateSingleFieldInCache(
       req.currentUser!.userId,
       'profilePicture',
       url
     )) as IUserDocument;
+
     socketImageObject.emit('update user', cacheUser);
     imageQueue.addImageJob('addUserProfileImageToDB', { key: userId, value: url, imgId: result.public_id, imgVersion: result.version });
     res.status(HTTP_STATUS.OK).json({ message: 'Image added successfully' });
