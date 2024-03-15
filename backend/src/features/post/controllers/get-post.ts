@@ -36,7 +36,22 @@ export class GetPost {
 
     let posts = [];
     const cachePosts: IPostDocument[] = await postCache.getPostsWithImagesFromCache('post', newStart, end);
-    posts = cachePosts.length ? cachePosts : (posts = await postService.getPosts({}, start, end, { createdAt: -1 }));
+
+    posts = cachePosts.length
+      ? cachePosts
+      : (posts = await postService.getPosts({ imgId: '$ne', gifUrl: '$ne' }, start, end, { createdAt: -1 }));
+    res.status(HTTP_STATUS.OK).json({ message: 'All posts with images', posts });
+  }
+
+  public async getPostsWithVideos(req: Request, res: Response): Promise<void> {
+    const { page } = req.params;
+    const start: number = PAGE_SIZE * (parseInt(page, 10) - 1);
+    const end: number = PAGE_SIZE * parseInt(page, 10);
+    const newStart: number = start === 0 ? start : start + 1;
+
+    let posts = [];
+    const cachePosts: IPostDocument[] = await postCache.getPostsWithVideoFromCache('post', newStart, end);
+    posts = cachePosts.length ? cachePosts : (posts = await postService.getPosts({ videoId: '$ne' }, start, end, { createdAt: -1 }));
     res.status(HTTP_STATUS.OK).json({ message: 'All posts with images', posts });
   }
 }

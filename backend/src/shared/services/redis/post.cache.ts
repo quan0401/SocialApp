@@ -89,9 +89,9 @@ export class PostCache extends BaseCache {
       if (!this.client.isOpen) {
         await this.client.connect();
       }
-      const postCounts: string[] = await this.client.HMGET(`user:${currentUserId}`, 'postsCount');
+      const postsCount: string[] = await this.client.HMGET(`user:${currentUserId}`, 'postsCount');
 
-      // const result: string = (await this.client.HGET(`user:${currentUserId}`, 'postCounts')) as string;
+      // const result: string = (await this.client.HGET(`user:${currentUserId}`, 'postsCount')) as string;
 
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
 
@@ -99,9 +99,9 @@ export class PostCache extends BaseCache {
 
       multi.HSET(`posts:${key}`, dataToSave);
 
-      const postCountsInt: number = parseInt(postCounts[0], 10) + 1;
+      const postCountsInt: number = parseInt(postsCount[0], 10) + 1;
 
-      multi.HSET(`users:${userId}`, ['postCounts', postCountsInt]);
+      multi.HSET(`users:${userId}`, ['postsCount', postCountsInt]);
 
       await multi.exec();
     } catch (error) {
@@ -192,7 +192,33 @@ export class PostCache extends BaseCache {
     }
   }
 
-  // public async getPostsWithVideoFromCache(): Promise<IPostDocument[]> {}
+  public async getPostsWithVideoFromCache(key: string, start: number, end: number): Promise<IPostDocument[]> {
+    try {
+      if (!this.client.isOpen) await this.client.connect();
+      const postsIds: string[] = await this.client.ZRANGE(key, start, end, { REV: true });
+      const multi: ReturnType<typeof this.client.multi> = this.client.multi();
+
+      postsIds.forEach((postId: string) => {
+        multi.HGETALL(`posts:${postId}`);
+      });
+      const replies: postCacheMultiType = (await multi.exec()) as postCacheMultiType;
+      const posts: IPostDocument[] = [];
+
+      for (const reply of replies as IPostDocument[]) {
+        if (!(reply.videoId && reply.videoVersion)) continue;
+
+        reply.reactions = Helpers.parseJson(reply.reactions);
+        reply.commentsCount = Helpers.parseJson(reply.commentsCount);
+        reply.createdAt = new Date(Helpers.parseJson(reply.createdAt));
+        posts.push(reply);
+      }
+
+      return posts;
+    } catch (error) {
+      log.error(error);
+      throw new ServerError('Post Cache error');
+    }
+  }
 
   public async getUserPostsFromCache(key: 'post', uId: number): Promise<IPostDocument[]> {
     try {
@@ -240,18 +266,18 @@ export class PostCache extends BaseCache {
     }
   }
 
-  public async deletePostFromCache(key: string, currentUser: string): Promise<void> {
+  public async deletePostFromCache(key: string, currentUserId: string): Promise<void> {
     try {
       if (!this.client.isOpen) await this.client.connect();
 
-      const postsCount: string[] = await this.client.HMGET(`user:${currentUser}`, 'postCounts');
+      const postsCount: string[] = await this.client.HMGET(`users:${currentUserId}`, 'postsCount');
 
       const multi: ReturnType<typeof this.client.multi> = this.client.multi();
-      multi.ZREM(key, `${key}`);
+      multi.ZREM('post', `${key}`);
       multi.DEL(`posts:${key}`);
       multi.DEL(`comments:${key}`);
       multi.DEL(`reactions:${key}`);
-      multi.HSET(`users:${key}`, 'postCounts', `${parseInt(postsCount[0], 10) - 1}`);
+      if (parseInt(postsCount[0]) > 0) multi.HSET(`users:${currentUserId}`, 'postsCount', `${parseInt(postsCount[0], 10) - 1}`);
       await multi.exec();
     } catch (error) {
       log.error(error);
@@ -268,10 +294,10 @@ export class PostCache extends BaseCache {
       const dataToSave = {
         profilePicture: `${profilePicture}`,
         post: `${post}`,
-        imgId: `${imgId}`,
-        imgVersion: `${imgVersion}`,
-        videoId: `${imgId}`,
-        videoVersion: `${imgVersion}`,
+        imgId: imgId ? `${imgId}` : '',
+        imgVersion: imgVersion ? `${imgVersion}` : '',
+        videoId: videoId ? `${videoId}` : '',
+        videoVersion: videoVersion ? `${videoVersion}` : '',
         bgColor: `${bgColor}`,
         privacy: `${privacy}`,
         gifUrl: `${gifUrl}`,

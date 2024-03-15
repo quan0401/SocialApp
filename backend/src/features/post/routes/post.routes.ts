@@ -16,14 +16,16 @@ class PostRoutes {
 
     this.router.post('/', CreatePost.prototype.post);
     this.router.post('/image', CreatePost.prototype.postWithImage);
+    this.router.post('/video', CreatePost.prototype.addPostWithVideo);
 
     this.router.get('/:page', GetPost.prototype.getPosts);
     this.router.get('/image/:page', GetPost.prototype.getPostsWithImages);
+    this.router.get('/video/:page', GetPost.prototype.getPostsWithVideos);
 
     this.router.delete('/:postId', DeletePost.prototype.delete);
 
     this.router.put('/:postId', UpdatePost.prototype.update);
-    this.router.put('/image/:postId', UpdatePost.prototype.postWithImage);
+    this.router.put('/content/:postId', UpdatePost.prototype.postWithContent);
 
     return this.router;
   }

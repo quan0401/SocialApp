@@ -28,11 +28,13 @@ withCredentials: true
 {}
 
 ###
-DELETE {{baseUrl}}/{{urlPath}}/image/64ec8bab3711bf2c6d1b1605
+DELETE {{baseUrl}}/{{urlPath}}/image
 Content-Type: application/json
 withCredentials: true
 
-{}
+{
+  "imageId": "65eeafa5129460e884928057"
+}
 
 ###
 GET {{baseUrl}}/{{urlPath}}/image/64d1d8eeffde0ce3a2bbd12d
