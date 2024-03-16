@@ -13,6 +13,7 @@ class Config {
   public CLOUD_NAME: string;
   public API_KEY: string;
   public API_SECRET: string;
+  public API_URL: string;
   public FOLDER: string | undefined;
   // Email
   public SENDER_EMAIL: string | undefined;
@@ -33,6 +34,7 @@ class Config {
     this.CLOUD_NAME = process.env.CLOUD_NAME || '';
     this.API_KEY = process.env.API_KEY || '';
     this.API_SECRET = process.env.API_SECRET || '';
+    this.API_URL = process.env.API_URL || '';
     this.FOLDER = process.env.FOLDER || '';
     // Email
     this.SENDER_EMAIL = process.env.SENDER_EMAIL || '';
