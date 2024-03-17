@@ -20,7 +20,7 @@ export abstract class CustomError extends Error {
     super(message);
   }
 
-  serializeReponse(): IError {
+  serializeErrors(): IError {
     return {
       message: this.message,
       statusCode: this.statusCode,

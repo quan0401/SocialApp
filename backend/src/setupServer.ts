@@ -1,4 +1,3 @@
-import { IErrorResponse } from './shared/globals/helpers/error-handler';
 import { Application, json, urlencoded, Response, Request, NextFunction } from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -11,11 +10,17 @@ import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
 import compression from 'compression';
 import 'express-async-errors';
-import { config } from './config';
-import { CustomError } from './shared/globals/helpers/error-handler';
-import applicationRoutes from './routes';
-
+import { config } from '~/config';
+import { CustomError, IErrorResponse } from '~global/helpers/error-handler';
+import applicationRoutes from '~/routes';
 import Logger from 'bunyan';
+import { SocketIOPostHandler } from '~sockets/post.socket';
+import { SocketIOFollowerHandler } from '~sockets/follower.socket';
+import { SocketIOUserHandler } from '~sockets/user.socket';
+import { SocketNofitication } from '~sockets/nofitication.socket';
+import { SocketImage } from '~sockets/image.socket';
+import { SocketChat } from '~sockets/chat.socket';
+import swStats from 'swagger-stats';
 
 const SERVER_PORT = 5001;
 const log: Logger = config.createLogger('server');
@@ -29,6 +34,7 @@ export class ChattyServer {
   public start(): void {
     this.securityMiddleware(this.app);
     this.standardMiddleware(this.app);
+    this.apiMonitoring(this.app);
     this.routeMiddleware(this.app);
     this.globalErrorHandler(this.app);
     this.startServer(this.app);
@@ -39,7 +45,7 @@ export class ChattyServer {
       cookieSession({
         name: 'session',
         keys: [config.SECRET_KEY_ONE, config.SECRET_KEY_TWO],
-        maxAge: 24 * 7 * 3600000,
+        maxAge: 3600 * 1000,
         secure: config.NODE_ENV !== 'development'
       })
     );
@@ -65,13 +71,23 @@ export class ChattyServer {
     applicationRoutes(app);
   }
 
+  private apiMonitoring(app: Application): void {
+    app.use(
+      swStats.getMiddleware({
+        uriPath: '/api-monitoring'
+      })
+    );
+  }
+
   private globalErrorHandler(app: Application): void {
+    // Handle unknow routes
     app.all('*', (req: Request, res: Response) => {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found` });
     });
 
     app.use((error: IErrorResponse, req: Request, res: Response, next: NextFunction) => {
       log.error(error);
+
       if (error instanceof CustomError) {
         return res.status(error.statusCode).json(error.serializeErrors());
       }
@@ -79,7 +95,9 @@ export class ChattyServer {
     });
   }
 
+  // Server
   private async startServer(app: Application): Promise<void> {
+    if (!config.JWT_TOKEN) throw new Error('JWT_TOKEN must be provided.');
     try {
       const httpServer: http.Server = new http.Server(app);
       const socketIO: Server = await this.createSocketIO(httpServer);
@@ -104,6 +122,7 @@ export class ChattyServer {
     io.adapter(createAdapter(pubClient, subClient));
     return io;
   }
+
   private startHttpServer(httpServer: http.Server): void {
     log.info(`Server start on process ${process.pid}`);
     httpServer.listen(SERVER_PORT, () => {
@@ -111,5 +130,19 @@ export class ChattyServer {
     });
   }
 
-  private socketIOConnections(io: Server): void {}
+  private socketIOConnections(io: Server): void {
+    const socketIOPostHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+    const socketIOFollowerHandler: SocketIOFollowerHandler = new SocketIOFollowerHandler(io);
+    const socketIOUser: SocketIOUserHandler = new SocketIOUserHandler(io);
+    const socketIONofitcation: SocketNofitication = new SocketNofitication();
+    const socketIOImage: SocketImage = new SocketImage();
+    const socketIOChat: SocketChat = new SocketChat(io);
+
+    socketIOPostHandler.listen();
+    socketIOFollowerHandler.listen();
+    socketIOUser.listen();
+    socketIONofitcation.listen(io);
+    socketIOImage.listen(io);
+    socketIOChat.listen();
+  }
 }

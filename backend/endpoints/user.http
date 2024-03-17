@@ -1,0 +1,94 @@
+@baseUrl = http://localhost:5001
+@urlPath = api/v1
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/all/1
+Content-Type: application/json
+withCredentials: true
+
+{}
+
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/profile
+Content-Type: application/json
+withCredentials: true
+
+{}
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/profile/post/6500230442b82175aa2955c0/781862672836/Quan
+Content-Type: application/json
+withCredentials: true
+
+{}
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/profile/suggestions
+Content-Type: application/json
+withCredentials: true
+
+{}
+
+###
+GET {{baseUrl}}/{{urlPath}}/user/search/t
+Content-Type: application/json
+withCredentials: true
+
+{}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/change-password
+Content-Type: application/json
+withCredentials: true
+
+{
+  "currentPassword": "quan040104",
+  "newPassword": "quan0401",
+  "confirmPassword": "quan0401"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/basic-info
+Content-Type: application/json
+withCredentials: true
+
+{
+  "quote": "handsome",
+  "work": "handsome",
+  "school": "handsome",
+  "location": "handsome"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/social-links
+Content-Type: application/json
+withCredentials: true
+
+{
+  "facebook": "links handsome",
+  "instagram": "links handsome",
+  "twitter": "links handsome",
+  "youtube": "links handsome"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/user/nofitications-settings
+Content-Type: application/json
+withCredentials: true
+
+{
+  "messages": true,
+  "reactions": false,
+  "comments": false,
+  "follows": false
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/user/test-email
+Content-Type: application/json
+withCredentials: true
+
+{
+  "email": "dongminhquan12346@gmail.com"
+}
