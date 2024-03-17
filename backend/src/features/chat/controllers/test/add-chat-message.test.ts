@@ -26,7 +26,7 @@ jest.mock('~services/queues/base.queue');
 jest.mock('~global/helpers/cloudinary-upload');
 
 Object.defineProperties(socketServer, {
-  socketChatObject: {
+  socketIOChatObject: {
     value: new Server(),
     writable: true
   }
@@ -78,7 +78,7 @@ describe('AddChatMessage: add', () => {
     const spy = jest.spyOn(ChatCache.prototype, 'addChatToListInCache');
     jest.spyOn(ChatCache.prototype, 'addChatMessageToCache');
     const chatQueueSpy = jest.spyOn(chatQueue, 'addChatJob');
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
     jest.spyOn(emailQueue, 'addEmailJob');
     jest.spyOn(UserCache.prototype, 'getUserFromCache').mockResolvedValue(userMock);
 
@@ -93,8 +93,8 @@ describe('AddChatMessage: add', () => {
     expect(ChatCache.prototype.addChatMessageToCache).toHaveBeenNthCalledWith(1, conversationObjectId, messageData);
     expect(chatQueue.addChatJob).toHaveBeenCalled();
     expect(emailQueue.addEmailJob).toHaveBeenCalled();
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(1, 'message received', messageData);
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageData);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(1, 'message received', messageData);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageData);
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.CREATED);
   });
 
@@ -111,7 +111,7 @@ describe('AddChatMessage: add', () => {
     const spy = jest.spyOn(ChatCache.prototype, 'addChatToListInCache');
     jest.spyOn(ChatCache.prototype, 'addChatMessageToCache');
     const chatQueueSpy = jest.spyOn(chatQueue, 'addChatJob');
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
     jest.spyOn(emailQueue, 'addEmailJob');
     jest.spyOn(UserCache.prototype, 'getUserFromCache').mockResolvedValue(userMock);
 
@@ -126,8 +126,8 @@ describe('AddChatMessage: add', () => {
     expect(ChatCache.prototype.addChatMessageToCache).toHaveBeenNthCalledWith(1, conversationObjectId, messageData);
     expect(chatQueue.addChatJob).toHaveBeenCalled();
     expect(emailQueue.addEmailJob).not.toHaveBeenCalled();
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(1, 'message received', messageData);
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageData);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(1, 'message received', messageData);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageData);
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.CREATED);
   });
 
@@ -144,7 +144,7 @@ describe('AddChatMessage: add', () => {
     const spy = jest.spyOn(ChatCache.prototype, 'addChatToListInCache');
     jest.spyOn(ChatCache.prototype, 'addChatMessageToCache');
     const chatQueueSpy = jest.spyOn(chatQueue, 'addChatJob');
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
     jest.spyOn(emailQueue, 'addEmailJob');
     jest.spyOn(UserCache.prototype, 'getUserFromCache').mockResolvedValue(userMock);
 
@@ -159,8 +159,8 @@ describe('AddChatMessage: add', () => {
     expect(ChatCache.prototype.addChatMessageToCache).toHaveBeenNthCalledWith(1, conversationObjectId, messageData);
     expect(chatQueue.addChatJob).toHaveBeenCalled();
     expect(emailQueue.addEmailJob).not.toHaveBeenCalled();
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(1, 'message received', messageData);
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageData);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(1, 'message received', messageData);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageData);
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.CREATED);
   });
 });
@@ -182,11 +182,11 @@ describe('AddChatMessage: removeChatUsers', () => {
 
     jest.spyOn(ChatCache.prototype, 'removeChatUsersFromCache');
 
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
     await AddChatMessage.prototype.removeChatUsers(req, res);
 
     expect(ChatCache.prototype.removeChatUsersFromCache).toHaveBeenCalledWith(body);
-    expect(socketServer.socketChatObject.emit).toHaveBeenCalled();
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenCalled();
   });
 });
 
@@ -207,10 +207,10 @@ describe('AddChatMessage: addChatUsers', () => {
 
     jest.spyOn(ChatCache.prototype, 'addChatUsersToCache');
 
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
     await AddChatMessage.prototype.addChatUsers(req, res);
 
     expect(ChatCache.prototype.addChatUsersToCache).toHaveBeenCalledWith(body);
-    expect(socketServer.socketChatObject.emit).toHaveBeenCalled();
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenCalled();
   });
 });

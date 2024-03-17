@@ -9,7 +9,8 @@ const log: Logger = config.createLogger('setupDatabase');
 export default async () => {
   const connect = async () => {
     mongoose
-      .connect(config.NODE_ENV !== 'development' ? 'mongodb://localhost:27017/social' : (config.MONGO_URI as string), {})
+      // .connect(config.NODE_ENV !== 'development' ? 'mongodb://localhost:27017/social' : (config.MONGO_URI as string), {})
+      .connect(config.MONGO_URI as string)
       .then(() => {
         log.info('Successfully connected to database');
         redisConnection.connect();

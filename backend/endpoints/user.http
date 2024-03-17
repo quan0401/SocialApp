@@ -83,3 +83,12 @@ withCredentials: true
   "comments": false,
   "follows": false
 }
+
+###
+POST {{baseUrl}}/{{urlPath}}/user/test-email
+Content-Type: application/json
+withCredentials: true
+
+{
+  "email": "dongminhquan12346@gmail.com"
+}

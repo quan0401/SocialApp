@@ -72,7 +72,7 @@ describe('UpdatePost with image', () => {
     jest.spyOn(PostCache.prototype, 'updatePostInCache').mockResolvedValue(postMockData);
     jest.spyOn(postServer.socketIOPostObject, 'emit');
 
-    await UpdatePost.prototype.postWithImage(req, res);
+    await UpdatePost.prototype.postWithContent(req, res);
     expect(PostCache.prototype.updatePostInCache).toHaveBeenCalledWith(req.params.postId, updatedPost);
     expect(postServer.socketIOPostObject.emit).toHaveBeenCalledWith('update post', postMockData, 'posts');
     expect(postQueue.addPostJob).toHaveBeenCalledWith('updatePostInDB', { key: req.params.postId, value: postMockData });
@@ -93,7 +93,7 @@ describe('UpdatePost with image', () => {
     jest.spyOn(postServer.socketIOPostObject, 'emit');
     jest.spyOn(cloudinaryUploads, 'uploads').mockResolvedValue({ message: 'Upload fail' } as unknown as UploadApiResponse);
 
-    await UpdatePost.prototype.postWithImage(req, res).catch((error: CustomError) => {
+    await UpdatePost.prototype.postWithContent(req, res).catch((error: CustomError) => {
       expect(error.serializeErrors().message).toBe('Upload fail');
       expect(error.statusCode).toBe(HTTP_STATUS.BAD_REQUEST);
       expect(cloudinaryUploads.uploads).toHaveBeenCalledWith(updatedPostWithImage.image);
@@ -116,7 +116,7 @@ describe('UpdatePost with image', () => {
     jest.spyOn(postServer.socketIOPostObject, 'emit');
     jest.spyOn(cloudinaryUploads, 'uploads').mockResolvedValue({ version: '1234', public_id: '1234' } as unknown as UploadApiResponse);
 
-    await UpdatePost.prototype.postWithImage(req, res);
+    await UpdatePost.prototype.postWithContent(req, res);
 
     updatedPostWithImage.imgVersion = '1234';
     updatedPostWithImage.imgId = '1234';

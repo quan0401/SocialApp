@@ -20,7 +20,7 @@ jest.mock('~services/queues/base.queue');
 jest.mock('~global/helpers/cloudinary-upload');
 
 Object.defineProperties(socketServer, {
-  socketChatObject: {
+  socketIOChatObject: {
     value: new Server(),
     writable: true
   }
@@ -50,7 +50,7 @@ describe('DeleteChat', () => {
     const res: Response = chatMockResponse();
 
     jest.spyOn(ChatCache.prototype, 'markMessageAsDeleted').mockResolvedValue(messageDataMock);
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
 
     jest.spyOn(chatQueue, 'addChatJob');
     await DeleteChat.prototype.markMessageAsDeleted(req, res);
@@ -61,7 +61,7 @@ describe('DeleteChat', () => {
       req.params.messageId,
       req.params.type
     );
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(1, 'message read', messageDataMock);
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageDataMock);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(1, 'message read', messageDataMock);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageDataMock);
   });
 });

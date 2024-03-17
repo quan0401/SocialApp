@@ -25,6 +25,7 @@ export default (app: Application) => {
     app.use('', healthRoutes.health());
     app.use('', healthRoutes.env());
     app.use('', healthRoutes.instance());
+    app.use('', healthRoutes.fiboRoute());
 
     // verify routes
     app.use(AuthMiddleware.prototype.verifyUser);

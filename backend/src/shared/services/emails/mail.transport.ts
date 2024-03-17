@@ -15,17 +15,10 @@ interface IMailOptions {
 const log: Logger = config.createLogger('MailTransport');
 
 class MailTransport {
-  public async sendMail(receiverEmail: string, subject: string, body: string): Promise<void> {
-    if (config.NODE_ENV === 'development' || config.NODE_ENV === 'test') {
-      await this.developmentEmailSender(receiverEmail, subject, body);
-    } else {
-      await this.productionEmailSender(receiverEmail, subject, body);
-    }
-  }
-
-  private async developmentEmailSender(receiverEmail: string, subject: string, body: string): Promise<void> {
-    const transporter: Mail = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
+  private transporter: Mail;
+  constructor() {
+    this.transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
       port: 587,
       secure: false,
       auth: {
@@ -33,22 +26,43 @@ class MailTransport {
         pass: config.SENDER_EMAIL_PASSWORD
       }
     });
-
-    const mailOptions: IMailOptions = {
-      from: `Social app ${config.SENDER_EMAIL}`,
-      to: receiverEmail,
-      subject: subject,
-      html: body
-    };
-
-    try {
-      await transporter.sendMail(mailOptions);
-      log.info('Development email sent successfully');
-    } catch (error) {
-      log.error(error);
-      throw new BadRequesetError('Error sending email');
-    }
   }
+
+  public async sendMail(receiverEmail: string, subject: string, body: string): Promise<void> {
+    // if (config.NODE_ENV === 'development' || config.NODE_ENV === 'test') {
+    //   await this.developmentEmailSender(receiverEmail, subject, body);
+    // } else {
+    //   await this.productionEmailSender(receiverEmail, subject, body);
+    // }
+    await this.productionEmailSender(receiverEmail, subject, body);
+  }
+
+  // private async developmentEmailSender(receiverEmail: string, subject: string, body: string): Promise<void> {
+  //   const transporter: Mail = nodemailer.createTransport({
+  //     host: 'smtp.gmail.com',
+  //     port: 587,
+  //     secure: false,
+  //     auth: {
+  //       user: config.SENDER_EMAIL,
+  //       pass: config.SENDER_EMAIL_PASSWORD
+  //     }
+  //   });
+
+  //   const mailOptions: IMailOptions = {
+  //     from: `Social app ${config.SENDER_EMAIL}`,
+  //     to: receiverEmail,
+  //     subject: subject,
+  //     html: body
+  //   };
+
+  //   try {
+  //     await transporter.sendMail(mailOptions);
+  //     log.info('Development email sent successfully');
+  //   } catch (error) {
+  //     log.error(error);
+  //     throw new BadRequesetError('Error sending email');
+  //   }
+  // }
 
   private async productionEmailSender(receiverEmail: string, subject: string, body: string): Promise<void> {
     const mailOptions: IMailOptions = {
@@ -58,7 +72,8 @@ class MailTransport {
       html: body
     };
     try {
-      await sendGridMail.send(mailOptions);
+      // await sendGridMail.send(mailOptions);
+      await this.transporter.sendMail(mailOptions);
       log.info('Production email sent successfully');
     } catch (error) {
       log.error(error);

@@ -26,7 +26,7 @@ jest.mock('~services/db/chat.service');
 jest.mock('~global/helpers/cloudinary-upload');
 
 Object.defineProperties(socketServer, {
-  socketChatObject: {
+  socketIOChatObject: {
     value: new Server(),
     writable: true
   }
@@ -55,14 +55,14 @@ describe('UpdateMessages: markMessagesAsRead', () => {
 
     jest.spyOn(ChatCache.prototype, 'markMessagesAsRead').mockResolvedValue(messageDataMock);
     jest.spyOn(chatService, 'getUserConversationList');
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
     jest.spyOn(chatQueue, 'addChatJob');
 
     await UpdateMessages.prototype.markMessagesAsRead(req, res);
 
     expect(ChatCache.prototype.markMessagesAsRead).toHaveBeenCalledWith(req.params.senderId, req.params.conversationId);
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(1, 'message read', messageDataMock);
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageDataMock);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(1, 'message read', messageDataMock);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(2, 'chat list', messageDataMock);
     expect(chatQueue.addChatJob).toHaveBeenCalledWith('markMessagesAsRead', {
       conversationId: req.params.conversationId,
       senderId: req.params.senderId
@@ -107,7 +107,7 @@ describe('UpdateMessages: updateMessageReaction', () => {
     const res: Response = chatMockResponse();
 
     jest.spyOn(ChatCache.prototype, 'updateMessageReaction').mockResolvedValue(messageDataMock);
-    jest.spyOn(socketServer.socketChatObject, 'emit');
+    jest.spyOn(socketServer.socketIOChatObject, 'emit');
     jest.spyOn(chatQueue, 'addChatJob');
 
     await UpdateMessages.prototype.updateMessageReaction(req, res);
@@ -119,7 +119,7 @@ describe('UpdateMessages: updateMessageReaction', () => {
       req.body.reaction,
       req.body.type
     );
-    expect(socketServer.socketChatObject.emit).toHaveBeenNthCalledWith(1, 'message reaction', messageDataMock);
+    expect(socketServer.socketIOChatObject.emit).toHaveBeenNthCalledWith(1, 'message reaction', messageDataMock);
 
     expect(chatQueue.addChatJob).toHaveBeenCalledWith('updateMessageReaction', {
       messageId: req.body.messageId,
