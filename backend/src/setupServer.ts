@@ -13,7 +13,6 @@ import 'express-async-errors';
 import { config } from '~/config';
 import { CustomError, IErrorResponse } from '~global/helpers/error-handler';
 import applicationRoutes from '~/routes';
-
 import Logger from 'bunyan';
 import { SocketIOPostHandler } from '~sockets/post.socket';
 import { SocketIOFollowerHandler } from '~sockets/follower.socket';
@@ -21,6 +20,7 @@ import { SocketIOUserHandler } from '~sockets/user.socket';
 import { SocketNofitication } from '~sockets/nofitication.socket';
 import { SocketImage } from '~sockets/image.socket';
 import { SocketChat } from '~sockets/chat.socket';
+import swStats from 'swagger-stats';
 
 const SERVER_PORT = 5001;
 const log: Logger = config.createLogger('server');
@@ -34,6 +34,7 @@ export class ChattyServer {
   public start(): void {
     this.securityMiddleware(this.app);
     this.standardMiddleware(this.app);
+    this.apiMonitoring(this.app);
     this.routeMiddleware(this.app);
     this.globalErrorHandler(this.app);
     this.startServer(this.app);
@@ -70,6 +71,14 @@ export class ChattyServer {
     applicationRoutes(app);
   }
 
+  private apiMonitoring(app: Application): void {
+    app.use(
+      swStats.getMiddleware({
+        uriPath: '/api-monitoring'
+      })
+    );
+  }
+
   private globalErrorHandler(app: Application): void {
     // Handle unknow routes
     app.all('*', (req: Request, res: Response) => {
@@ -88,6 +97,7 @@ export class ChattyServer {
 
   // Server
   private async startServer(app: Application): Promise<void> {
+    if (!config.JWT_TOKEN) throw new Error('JWT_TOKEN must be provided.');
     try {
       const httpServer: http.Server = new http.Server(app);
       const socketIO: Server = await this.createSocketIO(httpServer);

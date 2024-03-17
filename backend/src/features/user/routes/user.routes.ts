@@ -25,7 +25,6 @@ class UserRoutes {
     this.router.put('/basic-info', Edit.prototype.basicInfo);
     this.router.put('/social-links', Edit.prototype.socialLinks);
     this.router.put('/nofitications-settings', UpdateSetting.prototype.nofitication);
-
     return this.router;
   }
 }

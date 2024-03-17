@@ -31,3 +31,23 @@ withCredentials: true
   "password": "quan0401"
 }
 
+###
+POST {{baseUrl}}/{{urlPath}}/forgot-password
+Content-Type: application/json
+withCredentials: true
+
+{
+  "email": "dongminhquan2004@gmail.com"
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/reset-password/aae05b5221762696868760b44370d423f30dd076
+Content-Type: application/json
+withCredentials: true
+
+{
+  "password": "quan0401",
+  "confirmPassword": "quan0401"
+}
+
+# http://localhost:3000/reset-password/aae05b5221762696868760b44370d423f30dd076
