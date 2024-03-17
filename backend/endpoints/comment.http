@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:5001
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/comment
+Content-Type: application/json
+withCredentials: true
+
+{
+  "avatarColor": "blue",
+  "postId": "64d3615382e9d766c93d9aa5",
+  "profilePicture": "https://res.cloudinary.com/vdg3fsapzu/image/upload/1691474164/social/64d1d8eeffde0ce3a2bbd12d.jpg",
+  "comment": "test nofitication queue",
+  "userTo": "64d7176700dd5991fa36e90e"
+}
+
+
+###
+GET {{baseUrl}}/{{urlPath}}/comment/names/64d3615382e9d766c93d9aa5
+Content-Type: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/comment/64d3615382e9d766c93d9aa5
+Content-Type: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/comment/64d3615382e9d766c93d9aa5/64ddae14693b9e9298515971
+Content-Type: application/json
+withCredentials: true
+

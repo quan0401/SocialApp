@@ -1,0 +1,98 @@
+@baseUrl = http://localhost:5001
+@urlPath = api/v1
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/video/1
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+
+###
+POST {{baseUrl}}/{{urlPath}}/post
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "without image",
+  "bgColor": "1234",
+  "privacy": "Public",
+  "gifUrl": "1234",
+  "profilePicture": "https://res.cloudinary.com/dg3fsapzu/image/upload/v1694507811/social/6500231f42b82175aa2955ce.jpg",
+  "feelings": "1234"
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/post/image
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "with image",
+  "bgColor": "1234",
+  "privacy": "Public",
+  "gifUrl": "1234",
+  "profilePicture": "https://res.cloudinary.com/dg3fsapzu/image/upload/v1694507811/social/6500231f42b82175aa2955ce.jpg",
+  "feelings": "1234",
+  "image": ""
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/post/video
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "cat video",
+  "bgColor": "#ffffff",
+  "privacy": "Public",
+  "gifUrl": "1234",
+  "profilePicture": "https://res.cloudinary.com/dg3fsapzu/image/upload/v1694507811/social/6500231f42b82175aa2955ce.jpg",
+  "feelings": "1234",
+  "video": "video-encoded base64"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/post/65f30aa9d8bf23608b61a1d3
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "cat video",
+  "bgColor": "#ffffff",
+  "privacy": "Public",
+  "gifUrl": "1234",
+  "profilePicture": "https://res.cloudinary.com/dg3fsapzu/image/upload/v1694507811/social/6500231f42b82175aa2955ce.jpg",
+  "feelings": "1234"
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/post/content/65f30aa9d8bf23608b61a1d3
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "add image to post",
+  "bgColor": "#ffffff",
+  "privacy": "Public",
+  "gifUrl": "1234",
+  "profilePicture": "https://res.cloudinary.com/dg3fsapzu/image/upload/v1694507811/social/6500231f42b82175aa2955ce.jpg",
+  "feelings": "1234",
+  "image": "base64-enconded",
+}
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/post/65f269e03429b480d284ff59
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{}
+
+
