@@ -28,16 +28,16 @@ export default (app: Application) => {
     app.use('', healthRoutes.fiboRoute());
 
     // verify routes
-    app.use(AuthMiddleware.prototype.verifyUser);
-    app.use(`${BASE_URL}/currentUser`, currentRoutes.routes());
-    app.use(`${BASE_URL}/post`, postRoutes.routes());
-    app.use(`${BASE_URL}/reaction`, reactionRoute.routes());
-    app.use(`${BASE_URL}/comment`, commentRoute.routes());
-    app.use(`${BASE_URL}/follow`, followerRoutes.routes());
-    app.use(`${BASE_URL}/nofitication`, nofiticationRoutes.routes());
-    app.use(`${BASE_URL}/image`, imageRoutes.routes());
-    app.use(`${BASE_URL}/chat`, chatRoutes.routes());
-    app.use(`${BASE_URL}/user`, userRoutes.routes());
+    // app.use(AuthMiddleware.prototype.verifyUser);
+    app.use(`${BASE_URL}/currentUser`, AuthMiddleware.prototype.verifyUser, currentRoutes.routes());
+    app.use(`${BASE_URL}/post`, AuthMiddleware.prototype.verifyUser, postRoutes.routes());
+    app.use(`${BASE_URL}/reaction`, AuthMiddleware.prototype.verifyUser, reactionRoute.routes());
+    app.use(`${BASE_URL}/comment`, AuthMiddleware.prototype.verifyUser, commentRoute.routes());
+    app.use(`${BASE_URL}/follow`, AuthMiddleware.prototype.verifyUser, followerRoutes.routes());
+    app.use(`${BASE_URL}/nofitication`, AuthMiddleware.prototype.verifyUser, nofiticationRoutes.routes());
+    app.use(`${BASE_URL}/image`, AuthMiddleware.prototype.verifyUser, imageRoutes.routes());
+    app.use(`${BASE_URL}/chat`, AuthMiddleware.prototype.verifyUser, chatRoutes.routes());
+    app.use(`${BASE_URL}/user`, AuthMiddleware.prototype.verifyUser, userRoutes.routes());
   };
   routes();
 };

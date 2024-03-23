@@ -1,0 +1,7 @@
+aws deploy create-deployment \
+    --region ap-southeast-1 \
+    --application-name socialapp-server-default-app  \
+    --deployment-config-name CodeDeployDefault.AllAtOnce \
+    --deployment-group-name socialapp-server-default-group \
+    --file-exists-behavior "OVERWRITE" \
+    --s3-location bucket=socialapp-server-default-app,bundleType=zip,key=SocialApp.zip 
