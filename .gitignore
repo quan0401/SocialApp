@@ -79,6 +79,7 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.production
+.env.develop
 .env.local
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -138,3 +139,5 @@ dump.rdb
 # Ignore contents inside root level directories
 /*/dump.rdb
 /*/.DS_Store
+
+trashbin.txt
