@@ -46,7 +46,7 @@ export class ChattyServer {
         name: 'session',
         keys: [config.SECRET_KEY_ONE, config.SECRET_KEY_TWO],
         maxAge: 3600 * 1000,
-        secure: config.NODE_ENV !== 'development'
+        secure: config.NODE_ENV !== 'develop'
       })
     );
     app.use(hpp());

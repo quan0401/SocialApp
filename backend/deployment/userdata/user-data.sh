@@ -45,12 +45,12 @@ fi
 cd /home/ec2-user
 
 # clone dev branch
-git clone -b develop https://github.com/quan0401/SocialApp.git
+git clone -b staging https://github.com/quan0401/SocialApp.git
 cd SocialApp/backend
 sudo npm install
-aws s3 sync s3://socialapp-env-files/develop .
+aws s3 sync s3://socialapp-env-files/staging .
 sudo dnf install unzip -y   # For CentOS 7 or later
 sudo unzip env-file.zip
-sudo cp .env.develop .env
+sudo cp .env.staging .env
 sudo npm run build
 sudo npm start
