@@ -125,6 +125,7 @@ jobs:
   linting:
     executor: app-executor
     steps:
+      - checkout
       - *show-current-branch-name
       - *restore-cache
       - run:
@@ -138,18 +139,21 @@ jobs:
   code-formatter-check:
     executor: app-executor
     steps:
+      - checkout
       - *show-current-branch-name
       - *restore-cache
       - run:
           name: Run prettier check
           command: |
             cd backend
+            npm i
             npm run prettier:check
       - *notify-on-fail
 
   unit-test:
     executor: app-executor
     steps:
+      - checkout
       - setup_remote_docker
       - *show-current-branch-name
       - *restore-cache
@@ -161,6 +165,7 @@ jobs:
           name: Run unit test
           command: |
             cd backend
+            npm i
             sleep 3
             npm run test
       - codecov/upload
@@ -169,11 +174,12 @@ jobs:
   terraform-validate:
     executor: terraform-executor
     steps:
+      - checkout
       - *show-current-branch-name
       - run:
           name: Terraform validate & format
           command: |
-            cd backend/deployment/
+            cd backend/deployment
             terraform init -backend=false
             terraform validate
             terraform fmt
@@ -182,6 +188,7 @@ jobs:
   terraform-plan-and-apply:
     executor: terraform-executor
     steps:
+      - checkout
       - *show-current-branch-name
       - aws-cli/setup:
           profile_name: default
@@ -203,6 +210,7 @@ jobs:
   upload-project-to-s3:
     executor: aws-cli/default
     steps:
+      - checkout
       - aws-cli/setup:
           profile_name: default
       - *zip-project
@@ -215,6 +223,7 @@ jobs:
   push-to-aws-code-deploy:
     executor: aws-cli/default
     steps:
+      - checkout
       - aws-cli/setup:
           profile_name: default
       - run:
@@ -299,6 +308,7 @@ jobs:
   terraform-destroy:
     executor: terraform-executor
     steps:
+      - checkout
       - *show-current-branch-name
       - run:
           name: Terraform destroy
