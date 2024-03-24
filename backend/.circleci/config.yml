@@ -9,9 +9,7 @@ executors:
       - image: cimg/node:18.17.1
       - image: cimg/redis:7.0.12
       - image: 'cibuilds/base:latest'
-
     working_directory: ~/repo/backend
-    command: ls -l
   terraform-executor:
     docker:
       - image: hashicorp/terraform:latest
@@ -23,8 +21,10 @@ executors:
 aliases:
   - &show-current-branch-name
     run:
-      name: Show current branch
-      command: echo ${CIRCLE_BRANCH}
+      name: Show current branch and list current directory
+      command: |
+        echo "Current branch: ${CIRCLE_BRANCH}"
+        ls -l
   - &restore-cache
     restore_cache:
       keys:
