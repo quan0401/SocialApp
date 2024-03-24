@@ -27,6 +27,7 @@ aliases:
         ls -l
         cd backend
         ls -l
+        pwd
   - &restore-cache
     restore_cache:
       keys:
