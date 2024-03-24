@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "social-app-terraform-state"
-    key     = "production/socialapp.tfstate" # find production folder in s3 bucket then create socialapp.tfstate file
+    key     = "develop/socialapp.tfstate" # find develop folder in s3 bucket then create socialapp.tfstate file
     region  = "ap-southeast-1"
     encrypt = true
   }
