@@ -23,7 +23,7 @@ executors:
 aliases:
   - &show-current-branch-name
     run:
-      name: Show current branch and list current directory
+      name: Show current branch
       command: |
         echo "Current branch: ${CIRCLE_BRANCH}"
   - &restore-cache
@@ -36,6 +36,7 @@ aliases:
       name: Install dependencies
       command: |
         cd backend
+        cat package.json
         npm install
 
   - &save-cache
