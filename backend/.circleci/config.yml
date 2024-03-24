@@ -313,7 +313,7 @@ jobs:
       - run:
           name: Terraform destroy
           command: |
-            cd deployment/
+            cd backend/deployment/
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
             terraform destroy -auto-approve
@@ -399,8 +399,8 @@ workflows:
           requires:
             - notify-via-slack
       - terraform-destroy:
-          requires:
-            - hold
+          # requires:
+          #   - hold
           filters:
             branches:
               only:
