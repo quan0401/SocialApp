@@ -9,7 +9,7 @@ executors:
       - image: cimg/node:18.17.1
       - image: cimg/redis:7.0.12
       - image: 'cibuilds/base:latest'
-    working_directory: ~/repo
+    working_directory: ~/repo/backend
   terraform-executor:
     docker:
       - image: hashicorp/terraform:latest
