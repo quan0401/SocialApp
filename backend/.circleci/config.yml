@@ -26,7 +26,6 @@ aliases:
       name: Show current branch and list current directory
       command: |
         echo "Current branch: ${CIRCLE_BRANCH}"
-        cd backend
   - &restore-cache
     restore_cache:
       keys:
@@ -35,7 +34,10 @@ aliases:
   - &install-dependencies
     run:
       name: Install dependencies
-      command: npm install
+      command: |
+        cd backend
+        npm install
+
   - &save-cache
     save_cache:
       paths:
