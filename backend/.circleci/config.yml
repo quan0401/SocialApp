@@ -24,6 +24,7 @@ aliases:
       name: Show current branch and list current directory
       command: |
         echo "Current branch: ${CIRCLE_BRANCH}"
+        pwd
         ls -l
         cd backend
         ls -l
