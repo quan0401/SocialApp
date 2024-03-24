@@ -31,7 +31,7 @@ export class GetComment {
         ? repylyFromCache
         : await commentService.getCommentNamesFromPost({ postId: new mongoose.Types.ObjectId(postId) }, { createdAt: -1 });
 
-    res.status(HTTP_STATUS.OK).json({ message: "Get comments' name", names: reply.names, count: reply.count });
+    res.status(HTTP_STATUS.OK).json({ message: 'Get comments name', names: reply.names, count: reply.count });
   }
 
   @joiValidation(getCommentSchema, true)

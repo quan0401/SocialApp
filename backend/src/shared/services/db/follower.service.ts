@@ -77,7 +77,7 @@ class FollowerService {
         username
       };
       const template: string = nofiticationTemplate.nofiticationMessageTemplate(templateParams);
-      emailQueue.addEmailJob('followerEmail', { receiverEmail: followeeData?.email!, template, subject: 'Follower Nofitication' });
+      emailQueue.addEmailJob('followerEmail', { receiverEmail: followeeData!.email!, template, subject: 'Follower Nofitication' });
     }
   }
 

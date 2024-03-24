@@ -27,7 +27,7 @@ export class Password {
     // Password reset will be expire in 1 hour.
     await authService.updatePasswordToken(existingUser._id.toString(), randomCharacters, Date.now() + 60 * 60 * 1000);
 
-    const resetLink: string = `${config.CLIENT_URI}/reset-password/${randomCharacters}`;
+    const resetLink = `${config.CLIENT_URI}/reset-password/${randomCharacters}`;
     const template: string = forgotPasswordTemplate.passwordResetTemplate(existingUser.username, resetLink);
     emailQueue.addEmailJob('forgotPasswordEmail', {
       template,
@@ -42,7 +42,7 @@ export class Password {
     const { password, confirmPassword } = req.body;
     const { token } = req.params;
     if (password !== confirmPassword) {
-      throw new BadRequesetError("Password doesn't match");
+      throw new BadRequesetError('Password does not match');
     }
     const existingUser: IAuthDocument = await authService.getAuthUserByPasswordToken(token);
     if (!existingUser) {

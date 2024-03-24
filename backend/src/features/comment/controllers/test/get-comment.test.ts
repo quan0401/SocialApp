@@ -97,7 +97,7 @@ describe('Get comment: getCommetNamesOfPost', () => {
     expect(commentService.getCommentNamesFromPost).not.toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith({
-      message: "Get comments' name",
+      message: 'Get comments name',
       names: mockCommentNameList.names,
       count: mockCommentNameList.count
     });
@@ -120,7 +120,7 @@ describe('Get comment: getCommetNamesOfPost', () => {
     );
     expect(res.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
     expect(res.json).toHaveBeenCalledWith({
-      message: "Get comments' name",
+      message: 'Get comments name',
       names: mockCommentNameList.names,
       count: mockCommentNameList.count
     });

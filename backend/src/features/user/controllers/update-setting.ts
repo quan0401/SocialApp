@@ -10,7 +10,7 @@ const userCache: UserCache = new UserCache();
 export class UpdateSetting {
   @joiValidation(notificationSettingsSchema)
   public async nofitication(req: Request, res: Response): Promise<void> {
-    const userId: string = `${req.currentUser!.userId}`;
+    const userId = `${req.currentUser!.userId}`;
     const updatedUser: IUserDocument = (await userCache.updateSingleFieldInCache(userId, 'notifications', req.body)) as IUserDocument;
     userQueue.addUserJob('updateNofiticationsSetting', { key: userId, value: req.body as INotificationSettings });
     res.status(HTTP_STATUS.OK).json({

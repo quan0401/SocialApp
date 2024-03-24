@@ -13,7 +13,7 @@ const userCache: UserCache = new UserCache();
 
 export class DeleteImage {
   public async image(req: Request, res: Response): Promise<void> {
-    let { imageId } = req.body;
+    const { imageId } = req.body;
     if (!imageId) throw new BadRequesetError('Must have imageId in body');
     socketImageObject.emit('delete image', imageId);
     imageQueue.addImageJob('removeImageFromDB', { imageId });

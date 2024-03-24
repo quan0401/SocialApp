@@ -11,7 +11,7 @@ const userCache: UserCache = new UserCache();
 export class Edit {
   @joiValidation(socialLinksSchema)
   public async socialLinks(req: Request, res: Response): Promise<void> {
-    const userId: string = `${req.currentUser!.userId}`;
+    const userId = `${req.currentUser!.userId}`;
     await userCache.updateSingleFieldInCache(userId, 'social', req.body);
     userQueue.addUserJob('updateSocialLinks', { key: userId, value: req.body as ISocialLinks });
     res.status(HTTP_STATUS.OK).json({
@@ -21,7 +21,7 @@ export class Edit {
 
   @joiValidation(basicInfoSchema)
   public async basicInfo(req: Request, res: Response): Promise<void> {
-    const userId: string = `${req.currentUser!.userId}`;
+    const userId = `${req.currentUser!.userId}`;
     for (const [key, value] of Object.entries(req.body)) await userCache.updateSingleFieldInCache(userId, key, value as string);
     userQueue.addUserJob('updateBasicInfo', { key: userId, value: req.body as IBasicInfo });
     res.status(HTTP_STATUS.OK).json({
