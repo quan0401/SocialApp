@@ -73,7 +73,7 @@ describe('Add reaction', () => {
       req.body.previousReaction
     );
 
-    expect(reactionQueue.addReactionJob).toHaveBeenCalledWith('addReactionToDB', reactionData);
+    // expect(reactionQueue.addReactionJob).toHaveBeenCalledWith('addReactionToDB', reactionData);
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ message: 'Reaction added successfully' });

@@ -4,16 +4,12 @@ import { UserCache } from '~services/redis/user.cache';
 import { userService } from '~services/db/user.service';
 import { FollowerCache } from '~services/redis/follower.cache';
 import { followerService } from '~services/db/follower.service';
-import { PostCache } from '~services/redis/post.cache';
 import { GetUsers } from '../get-profiles';
 import { userMock } from '~mocks/user.mock';
 import { mockFollower } from '~mocks/follower.mock';
 import { authUserPayload } from '~mocks/auth.mock';
-import { BaseQueue } from '~services/queues/base.queue';
-
-jest.mock('~services/queues/base.queue');
-jest.mock;
-jest.mock;
+jest.mock('~services/redis/follower.cache');
+jest.mock('~services/redis/user.cache');
 jest.mock;
 jest.mock;
 

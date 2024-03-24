@@ -36,28 +36,28 @@ export class SignUp {
     // const authData = this.signupdata({ _id: authObjectId, uId, username, email, password, avatarColor });
     const authData: IAuthDocument = SignUp.prototype.signupdata({ _id: authObjectId, uId, username, email, password, avatarColor });
     const result: UploadApiResponse = (await uploads(avatarImage, userObjectId.toString(), true, true)) as UploadApiResponse;
-    // if (!result?.public_id) {
-    //   throw new BadRequesetError('File upload: Error occured. Try again!');
-    // }
+    if (!result?.public_id) {
+      throw new BadRequesetError('File upload: Error occured. Try again!');
+    }
 
-    // // Add to redis cache
-    // const userDataForCache: IUserDocument = SignUp.prototype.userData(authData, userObjectId);
-    // userDataForCache.profilePicture = `https://res.cloudinary.com/v${config.CLOUD_NAME}/image/upload/${result.version}/${
-    //   config.FOLDER
-    // }/${userObjectId.toString()}.jpg`;
+    // Add to redis cache
+    const userDataForCache: IUserDocument = SignUp.prototype.userData(authData, userObjectId);
+    userDataForCache.profilePicture = `https://res.cloudinary.com/v${config.CLOUD_NAME}/image/upload/${result.version}/${
+      config.FOLDER
+    }/${userObjectId.toString()}.jpg`;
 
-    // // Add to database
-    // // const user_.omit(userDataForCache, ['uId', 'username', 'email', 'avatarColor', 'password']); // dont need this
-    // const userResult = _.omit(userDataForCache, ['password']);
+    // Add to database
+    // const user_.omit(userDataForCache, ['uId', 'username', 'email', 'avatarColor', 'password']); // dont need this
+    const userResult = _.omit(userDataForCache, ['password']);
 
-    // await userCache.saveUserToCache(`${userObjectId}`, uId, userResult);
-    // authQueue.addAuthUserJob('addAuthUserToDB', { value: authData });
-    // userQueue.addUserJob('addUserToDB', { value: userDataForCache });
+    await userCache.saveUserToCache(`${userObjectId}`, uId, userResult);
+    authQueue.addAuthUserJob('addAuthUserToDB', { value: authData });
+    userQueue.addUserJob('addUserToDB', { value: userDataForCache });
 
-    // const userJwt: string = SignUp.prototype.signupToken(authData, userObjectId);
-    // req.session = { jwt: userJwt };
+    const userJwt: string = SignUp.prototype.signupToken(authData, userObjectId);
+    req.session = { jwt: userJwt };
 
-    // res.status(HTTP_STATUS.CREATED).json({ message: 'Created successfull', user: userResult, token: userJwt });
+    res.status(HTTP_STATUS.CREATED).json({ message: 'Created successfull', user: userResult, token: userJwt });
     res.status(HTTP_STATUS.CREATED).json({ message: 'Created successfull' });
   }
 
