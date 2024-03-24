@@ -191,14 +191,14 @@ jobs:
       - run:
           name: Terraform plan
           command: |
-            cd deployment/
+            cd backend/deployment/
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
             terraform plan
       - run:
           name: Terraform apply
           command: |
-            cd deployment/
+            cd backend/deployment/
             terraform workspace select ${CIRCLE_BRANCH}
             terraform apply -auto-approve
       - *notify-on-fail
