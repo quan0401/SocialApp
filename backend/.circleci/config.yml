@@ -29,7 +29,7 @@ aliases:
   - &restore-cache
     restore_cache:
       keys:
-        - app-{{ checksum "package.json" }}
+        - app-{{ checksum "backend/package.json" }}
         - app-
   - &install-dependencies
     run:
@@ -42,7 +42,7 @@ aliases:
     save_cache:
       paths:
         - node_modules
-      key: app-{{ checksum "package.json" }}
+      key: app-{{ checksum "backend/package.json" }}
   - &zip-project
     run:
       name: Zip project
@@ -129,7 +129,9 @@ jobs:
       - *restore-cache
       - run:
           name: Run linting
-          command: npm run lint:check
+          command: |
+            cd backend
+            npm run lint:check
       - *notify-on-fail
 
   code-formatter-check:
@@ -140,7 +142,9 @@ jobs:
       - *restore-cache
       - run:
           name: Run prettier check
-          command: npm run prettier:check
+          command: |
+            cd backend
+            npm run prettier:check
       - *notify-on-fail
 
   unit-test:
@@ -157,6 +161,7 @@ jobs:
       - run:
           name: Run unit test
           command: |
+            cd backend
             sleep 3
             npm run test
       - codecov/upload
@@ -170,7 +175,7 @@ jobs:
       - run:
           name: Terraform validate & format
           command: |
-            cd deployment/
+            cd backend/deployment/
             terraform init -backend=false
             terraform validate
             terraform fmt
