@@ -11,6 +11,7 @@ executors:
       - image: 'cibuilds/base:latest'
 
     working_directory: ~/repo/backend
+    command: ls -l
   terraform-executor:
     docker:
       - image: hashicorp/terraform:latest
