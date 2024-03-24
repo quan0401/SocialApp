@@ -385,22 +385,23 @@ workflows:
                 - develop
                 - staging
                 - main
-      - notify-via-slack:
-          requires:
-            - push-to-aws-code-deploy
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - main
+      # - notify-via-slack:
+      #     requires:
+      #       - push-to-aws-code-deploy
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop
+      #           - staging
+      #           - main
       # - hold:
       #     type: approval
       #     requires:
       #       - notify-via-slack
       - terraform-destroy:
-          # requires:
-          #   - hold
+          requires:
+            # - hold
+            - push-to-aws-code-deploy
           filters:
             branches:
               only:
