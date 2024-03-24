@@ -25,6 +25,8 @@ aliases:
       command: |
         echo "Current branch: ${CIRCLE_BRANCH}"
         ls -l
+        cd backend
+        ls -l
   - &restore-cache
     restore_cache:
       keys:
