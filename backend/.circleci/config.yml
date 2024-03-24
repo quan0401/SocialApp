@@ -394,10 +394,10 @@ workflows:
                 - develop
                 - staging
                 - main
-      - hold:
-          type: approval
-          requires:
-            - notify-via-slack
+      # - hold:
+      #     type: approval
+      #     requires:
+      #       - notify-via-slack
       - terraform-destroy:
           # requires:
           #   - hold
