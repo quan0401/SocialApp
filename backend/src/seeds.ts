@@ -1,7 +1,5 @@
 require('dotenv').config();
-
 import { faker } from '@faker-js/faker';
-import { floor, random } from 'lodash';
 import { createCanvas } from 'canvas';
 import axios, { AxiosError } from 'axios';
 import { config } from './config';

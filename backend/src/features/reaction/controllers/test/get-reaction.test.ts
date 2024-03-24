@@ -9,6 +9,7 @@ import { IReactionDocument } from '~reaction/interfaces/reaction.interface';
 jest.useFakeTimers();
 jest.mock('~services/db/reaction.service');
 jest.mock('~services/redis/reaction.cache');
+jest.mock('~services/queues/base.queue');
 
 describe('Get reaction: reactions', () => {
   beforeEach(() => {

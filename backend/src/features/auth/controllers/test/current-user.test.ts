@@ -6,6 +6,7 @@ import { userService } from '~services/db/user.service';
 import { UserCache } from '~services/redis/user.cache';
 
 import { CurrentUser } from '~auth/controllers/current-user';
+jest.mock('~services/queues/base.queue');
 
 describe('Current-user', () => {
   it('Should send null if user not exist', async () => {

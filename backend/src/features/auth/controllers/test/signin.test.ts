@@ -8,6 +8,7 @@ import { userService } from '~services/db/user.service';
 import { IUserDocument } from '~user/interfaces/user.interface';
 
 jest.mock('~services/db/user.service');
+jest.mock('~services/queues/base.queue');
 
 describe('Sigin', () => {
   beforeEach(() => {
