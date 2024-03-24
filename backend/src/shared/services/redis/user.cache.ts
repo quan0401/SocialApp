@@ -192,7 +192,7 @@ export class UserCache extends BaseCache {
       const followers: string[] = await this.client.LRANGE(`followers:${userId}`, 0, -1);
       const usersKeys: string[] = await this.client.ZRANGE('users', 0, -1);
 
-      for (let key of usersKeys) {
+      for (const key of usersKeys) {
         // Exclude user
         if (key === excludeUserKey) continue;
         const foundIndex: number = followers.indexOf(key);

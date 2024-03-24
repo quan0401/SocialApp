@@ -22,7 +22,7 @@ export class Signin {
       throw new BadRequesetError('Invalid credentials');
     }
 
-    const passwordMatch: Boolean = await existingUser.comparePassword(password);
+    const passwordMatch: boolean = await existingUser.comparePassword(password);
 
     if (!passwordMatch) {
       throw new BadRequesetError('Invalid credentials');
