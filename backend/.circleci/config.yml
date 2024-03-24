@@ -132,7 +132,8 @@ jobs:
           name: Run linting
           command: |
             cd backend
-            npm run lint:check
+            npx eslint 'src/**/*.ts'
+            # npm run lint:check
       - *notify-on-fail
 
   code-formatter-check:
