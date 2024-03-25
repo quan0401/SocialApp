@@ -48,6 +48,7 @@ aliases:
     run:
       name: Zip project
       command: |
+        cd backend
         rm -rf node_modules
         zip SocialApp.zip -r .
         echo "Zip successful"
@@ -385,23 +386,23 @@ workflows:
                 - develop
                 - staging
                 - main
-      # - notify-via-slack:
-      #     requires:
-      #       - push-to-aws-code-deploy
-      #     filters:
-      #       branches:
-      #         only:
-      #           - develop
-      #           - staging
-      #           - main
-      # - hold:
-      #     type: approval
-      #     requires:
-      #       - notify-via-slack
+      - notify-via-slack:
+          requires:
+            - push-to-aws-code-deploy
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - hold:
+          type: approval
+          requires:
+            - notify-via-slack
       - terraform-destroy:
           requires:
-            # - hold
-            - push-to-aws-code-deploy
+            - hold
+            # - push-to-aws-code-deploy
           filters:
             branches:
               only:
