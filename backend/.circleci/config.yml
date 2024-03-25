@@ -218,6 +218,7 @@ jobs:
       - run:
           name: Upload project to S3
           command: |
+            cd backend
             aws --region ap-southeast-1 s3 cp SocialApp.zip s3://socialapp-server-${CIRCLE_BRANCH}-app
       - *notify-on-fail
 
